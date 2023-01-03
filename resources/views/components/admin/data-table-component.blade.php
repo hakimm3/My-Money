@@ -5,7 +5,7 @@
             {{ $button }}
         </div>
         <div class="data-tables">
-            <table id="{{ $id }}" class="text-center table-striped">
+            <table id="{{ $id }}" class="table-striped">
                 <thead class="bg-light text-capitalize">
                     <tr>
                         <th width="2%">No</th>

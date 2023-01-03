@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PengeluaranRequest;
+use App\Models\Category;
 use App\Models\Pengeluaran;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
 {
@@ -15,22 +19,27 @@ class PengeluaranController extends Controller
      */
     public function index(Request $request)
     {
+        $data = Pengeluaran::filterMonth()->filterYear()->with('category')->orderBy('date', 'desc')->get();
         if($request->ajax()){
-            $data = Pengeluaran::with('category')->latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->editColumn('date', function($row){
+                    return Carbon::parse($row->date)->format('l d F Y');
+                })
                 ->addColumn('category', function($row){
                     return $row->category->name;
                 })
-                ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
-                    $btn = $btn.' <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                    return $btn;
+                ->addColumn('amount', function($row){
+                    return 'Rp. '.number_format($row->amount, 0, ',', '.');
                 })
+                ->addColumn('action', 'pengeluaran.action')
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('pengeluaran.index');
+
+        $categories = Category::all();
+        $compact = compact('categories');
+        return view('pengeluaran.index', $compact);
     }
 
     /**
@@ -49,9 +58,13 @@ class PengeluaranController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PengeluaranRequest $request)
     {
-        //
+        $pengeluaran =  Pengeluaran::updateOrCreate(['id' => $request->id], $request->validated());
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil disimpan'
+        ]);
     }
 
     /**
@@ -73,7 +86,11 @@ class PengeluaranController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pengeluaran = Pengeluaran::with('category')->find($id);
+        return response()->json([
+            'success' => true,
+            'data' => $pengeluaran
+        ]);
     }
 
     /**
@@ -96,6 +113,19 @@ class PengeluaranController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Pengeluaran::find($id)->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
+        ]);
+    }
+
+    public function import(){
+        Excel::import(new \App\Imports\PengeluaranImport, request()->file('file'));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data berhasil diimport'
+        ]);
     }
 }

@@ -15,12 +15,16 @@ return new class extends Migration
     {
         Schema::create('pengeluarans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->string('keterangan');
-            $table->date('tanggal');
-            $table->bigInteger('jumlah');
+            $table->foreignId('user_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('category_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('description')->nullable();
+            $table->date('date')->nullable();
+            $table->bigInteger('amount')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

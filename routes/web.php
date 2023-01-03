@@ -18,7 +18,11 @@ Route::get('/', function () {
     return redirect()->to('login');
 });
 
-Auth::routes();
+Auth::routes(['register', false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/pengeluaran', [App\Http\Controllers\PengeluaranController::class, 'index'])->name('pengeluaran.index');
+Auth::routes();
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('pengeluaran', App\Http\Controllers\PengeluaranController::class);
+    Route::post('pengeluaran/import', [App\Http\Controllers\PengeluaranController::class, 'import'])->name('pengeluaran.import');
+});

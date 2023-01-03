@@ -1,6 +1,10 @@
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>srtdash - ICO Dashboard</title>
+
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<title>{{ config('app.name', 'Laravel') }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {{-- <link rel="shortcut icon" type="image/png" href="{{ asset('/assets/images/icon/favicon.ico') }}"> --}}
 <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
@@ -18,4 +22,3 @@
 <link rel="stylesheet" href="{{ asset('/assets/css/responsive.css') }}">
 <!-- modernizr css -->
 <script src="{{ asset('/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
-

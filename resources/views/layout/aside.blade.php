@@ -8,7 +8,9 @@
         <div class="menu-inner">
             <nav>
                 <ul class="metismenu" id="menu">
-                    <li class="active">
+                    <li><a href="{{ route('home') }}"><i class="ti-dashboard"></i> <span>Dashboard</span></a></li>
+                    <li><a href="{{ route('pengeluaran.index') }}"><i class="ti-export"></i> <span>Penngeluaran</span></a></li>
+                    {{-- <li class="active">
                         <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
                         <ul class="collapse">
                             <li class="active"><a href="index.html">ICO dashboard</a></li>
@@ -113,7 +115,7 @@
                             </li>
                             <li><a href="#">Item level (1)</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
             </nav>
         </div>
