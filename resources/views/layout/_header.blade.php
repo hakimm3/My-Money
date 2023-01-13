@@ -182,9 +182,20 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">Message</a>
                     <a class="dropdown-item" href="#">Settings</a>
-                    <a class="dropdown-item" href="#">Log Out</a>
+                    <p class="dropdown-item" onclick="logout()">Log Out</p>
                 </div>
+
+                <form action="/logout" id="logout-form" hidden method="POST">
+                    @csrf
+                    {{-- <button class="btn btn-danger">Logout</button> --}}
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function logout() {
+        document.getElementById('logout-form').submit();
+    }
+</script>

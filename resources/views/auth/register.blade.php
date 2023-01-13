@@ -43,7 +43,7 @@
                         <a class="fb-login" href="#">Sign up with <i class="fa fa-facebook"></i></a>
                     </div>
                     <div class="col-6">
-                        <a class="google-login" href="#">Sign up with <i class="fa fa-google"></i></a>
+                        <a class="google-login" href="{{ route('redirectToGoogle') }}">Sign up with <i class="fa fa-google"></i></a>
                     </div>
                 </div>
             </div>

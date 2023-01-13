@@ -38,10 +38,10 @@
                     <button type="submit">Submit <i class="ti-arrow-right"></i></button>
                     <div class="login-other row mt-4">
                         <div class="col-6">
-                            <a class="fb-login" href="#">Log in with <i class="fa fa-facebook"></i></a>
+                            <a class="fb-login" href="{{ route('auth.facebook') }}">Log in with <i class="fa fa-facebook"></i></a>
                         </div>
                         <div class="col-6">
-                            <a class="google-login" href="#">Log in with <i class="fa fa-google"></i></a>
+                            <a class="google-login" href="{{ route('redirectToGoogle') }}">Log in with <i class="fa fa-google"></i></a>
                         </div>
                     </div>
                 </div>

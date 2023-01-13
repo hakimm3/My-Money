@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ExternalAuth\FacebookController;
+use App\Http\Controllers\GoogleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,6 +18,14 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return redirect()->to('login');
+});
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('handleGoogleCallback');
+
+Route::controller(FacebookController::class)->group(function () {
+    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
+    Route::get('auth/facebook/callback', 'handleFacebookCallback')->name('handleFacebookCallback');
 });
 
 Auth::routes(['register', false]);

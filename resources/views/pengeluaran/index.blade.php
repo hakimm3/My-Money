@@ -94,7 +94,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Jumlah</label>
-                    <input type="number" name="amount" id="amount" class="form-control">
+                    <input type="text" name="amount" id="amount" class="form-control">
                 </div>
                 <input type="hidden" name="id" id="id">
             </form>
@@ -164,7 +164,11 @@
                         data: 'action',
                         name: 'action'
                     },
-                ]
+                ],
+                // jika tanggalnya sama maka akan di gabung menjadi 1 row 
+                rowsGroup: [
+                    'date:name',
+            ],
             });
         });
     </script>
