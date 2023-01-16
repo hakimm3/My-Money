@@ -8,12 +8,6 @@
                 <span></span>
                 <span></span>
             </div>
-            <div class="search-box pull-left">
-                <form action="#">
-                    <input type="text" name="search" placeholder="Search..." required>
-                    <i class="ti-search"></i>
-                </form>
-            </div>
         </div>
         <!-- profile info & task notification -->
         <div class="col-md-6 col-sm-4 clearfix">
@@ -178,7 +172,7 @@
         <div class="col-sm-6 clearfix">
             <div class="user-profile pull-right">
                 <img class="avatar user-thumb" src="assets/images/author/avatar.png" alt="avatar">
-                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i></h4>
+                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{ auth()->user()->name }}<i class="fa fa-angle-down"></i></h4>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">Message</a>
                     <a class="dropdown-item" href="#">Settings</a>

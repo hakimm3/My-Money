@@ -25,10 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $totalBulanIni = Pengeluaran::whereMonth('date', Carbon::now()->month)->sum('amount');
+        $totalBulanIni = Pengeluaran::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->sum('amount');
         $totalBulanIni = 'Rp. '.number_format($totalBulanIni, 0, ',', '.');
         // total pengeluran grup berdasarkan kategori dan dapatkan nama kategorinya
-        $totalPengeluaran = Pengeluaran::filterMonth()->filterYear()->selectRaw('category_id, sum(amount) as total')
+        $totalPengeluaran = Pengeluaran::where('user_id', auth()->user()->id)->filterMonth()->filterYear()->selectRaw('category_id, sum(amount) as total')
             ->groupBy('category_id')
             ->with('category')
             ->get();
@@ -39,7 +39,7 @@ class HomeController extends Controller
         });
 
         // total pengeluaran per bulan
-        $totalPengeluaranPerBulan = Pengeluaran::filterMonth()->filterYear()->selectRaw('month(date) as bulan, sum(amount) as total')
+        $totalPengeluaranPerBulan = Pengeluaran::where('user_id', auth()->user()->id)->filterMonth()->filterYear()->selectRaw('month(date) as bulan, sum(amount) as total')
             ->groupBy('bulan')
             ->get();
         $totalPengeluaranPerBulan = $totalPengeluaranPerBulan->map(function($item){

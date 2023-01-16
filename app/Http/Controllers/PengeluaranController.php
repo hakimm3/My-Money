@@ -19,7 +19,7 @@ class PengeluaranController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Pengeluaran::filterMonth()->filterYear()->with('category')->orderBy('date', 'desc')->get();
+        $data = Pengeluaran::filterMonth()->filterYear()->with('category')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)->get();
         if($request->ajax()){
             return DataTables::of($data)
                 ->addIndexColumn()

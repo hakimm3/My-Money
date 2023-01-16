@@ -35,4 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('pengeluaran', App\Http\Controllers\PengeluaranController::class);
     Route::post('pengeluaran/import', [App\Http\Controllers\PengeluaranController::class, 'import'])->name('pengeluaran.import');
+
+    Route::resource('categories', App\Http\Controllers\CategoryController::class)->except(['show', 'update']);
 });

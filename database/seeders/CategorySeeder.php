@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $data = ['Makanan Pokok', 'Makanan Jajan', 'Pembelajaran', 'Fashion', 'Transportasi', 'Hiburan', 'Lainnya'];
+        $data = ['Makanan Pokok', 'Makanan Jajan', 'Pembelajaran', 'Fashion', 'Transportasi', 'Hiburan', 'Tabungan' ,'Lainnya'];
         foreach ($data as $value) {
             \App\Models\Category::create([
                 'name' => $value
