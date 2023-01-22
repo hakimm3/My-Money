@@ -1,6 +1,3 @@
-@push('css')
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@endpush
 
 @push('scripts')
     <script>

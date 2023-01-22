@@ -5,16 +5,16 @@
             {{ $button }}
         </div>
         <div class="data-tables">
-            <table id="{{ $id }}" class="table-striped">
+            <table id="{{ $id }}" class="table-striped table-responsive">
                 <thead class="bg-light text-capitalize">
                     <tr>
                         <th width="2%">No</th>
-                            {{ $columns }}
+                        {{ $columns }}
                         <th id="action">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                 
+
                 </tbody>
             </table>
         </div>

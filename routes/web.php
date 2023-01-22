@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExternalAuth\FacebookController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\UserManagement\RoleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,4 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::post('pengeluaran/import', [App\Http\Controllers\PengeluaranController::class, 'import'])->name('pengeluaran.import');
 
     Route::resource('categories', App\Http\Controllers\CategoryController::class)->except(['show', 'update']);
+
+    // User Management
+    Route::prefix('user-management')->as('user-management.')->group(function(){
+        Route::resource('role', RoleController::class)->except('update', 'create');
+        Route::post('role-permission/{id}', App\Http\Controllers\UserManagement\RolePermissionController::class)->name('set-role-permission'); 
+    });
 });
