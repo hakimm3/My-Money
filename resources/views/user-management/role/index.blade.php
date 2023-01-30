@@ -22,7 +22,7 @@
                     <button class="btn btn-primary btn-sm -bottom-3  mb-2" onclick="create()">Add Role</button>
                 @endslot
                 @slot('columns')
-                    <th>Role Name</th>
+                    <th width="70%">Role Name</th>
                 @endslot
             </x-admin.data-table-component>
         @endslot
@@ -46,7 +46,6 @@
             processing: true,
             serverSide: true,
             ajax: "",
-            responsive: true,
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex',

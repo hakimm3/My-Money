@@ -49,7 +49,7 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'profile_photo_url'
+        // 'profile_photo_url'
     ];
 
     public function userRole(){

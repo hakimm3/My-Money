@@ -11,12 +11,12 @@
                     <li><a href="{{ route('home') }}"><i class="ti-dashboard"></i> <span>Dashboard</span></a></li>
                     <li><a href="{{ route('pengeluaran.index') }}"><i class="ti-export"></i> <span>Penngeluaran</span></a></li>
                     <li><a href="{{ route('categories.index') }}"><i class="ti-menu"></i> <span>Kategori</span></a></li>
-                    <li class="active">
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>dashboard</span></a>
+                    
+                    <li class="@if (true)  @endif">
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>User Management</span></a>
                         <ul class="collapse">
-                            <li class="active"><a href="{{ route('user-management.role.index') }}">ICO dashboard</a></li>
-                            <li><a href="index2.html">Ecommerce dashboard</a></li>
-                            <li><a href="index3.html">SEO dashboard</a></li>
+                            <li class=""><a href="{{ route('user-management.role.index') }}">Roles and Permission</a></li>
+                            <li><a href="{{ route('user-management.user.index') }}">User</a></li>
                         </ul>
                     </li>
                     {{-- 
