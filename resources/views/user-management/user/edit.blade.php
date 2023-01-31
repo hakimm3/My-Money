@@ -4,6 +4,7 @@
             $('#modal-form').modal('show');
             $('#modal-form').find('.modal-title').text('Edit Pengguna');
             $('#form')[0].reset();
+            $('.password-group').attr('hidden', true);
             method = 'update'
             let url = "{{ route('user-management.user.edit', ":id") }}";
             url = url.replace(':id', id);

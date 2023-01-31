@@ -43,6 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('user-management')->as('user-management.')->group(function(){
         Route::resource('role', RoleController::class)->except('update', 'create');
         Route::post('role-permission/{id}', App\Http\Controllers\UserManagement\RolePermissionController::class)->name('set-role-permission'); 
-        Route::resource('user', App\Http\Controllers\UserManagement\UserController::class)->except('update', 'create');
+        Route::resource('user', App\Http\Controllers\UserManagement\UserController::class)->except('create');
     });
 });

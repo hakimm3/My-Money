@@ -37,11 +37,11 @@
                     <label for="">Email</label>
                     <input type="email" name="email" id="email" class="form-control">
                 </div>
-                <div class="form-group">
+                <div class="form-group password-group">
                     <label for="">Password</label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-                <div class="form-group">
+                <div class="form-group password-group">
                     <label for="">Confirm Password</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
                 </div>
@@ -54,7 +54,7 @@
                         @endforeach
                     </select>
                 </div>
-                <input type="text" name="id" id="id">
+                <input type="hidden" name="id" id="id">
             </form>
         @endslot
     </x-admin.modal-form-component>
@@ -74,6 +74,37 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
+
+        function destroy(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = '{{ route('user-management.user.destroy', ":id") }}'
+                    url = url.replace(':id', id)
+                    $.ajax({
+                        url: url,
+                        type: 'DELETE',
+                        success: function (response) {
+                            if (response.status) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your data has been deleted.',
+                                    'success'
+                                )
+                                table.ajax.reload();
+                            }
+                        }
+                    })
+                }
+            })
+        }
     </script>
 @endpush
 

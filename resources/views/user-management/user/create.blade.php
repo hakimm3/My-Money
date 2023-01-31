@@ -19,13 +19,18 @@
             $('#btnSave').attr('disabled', true);
 
             let message = 'Data berhasil disimpan';
+            let url = "{{ route('user-management.user.store') }}";
+            let type = "POST";
             if (method == 'update') {
                 message = 'Data berhasil diubah';
+                url = "{{ route('user-management.user.update', ":id") }}";
+                url = url.replace(':id', id);
+                type = "PUT";
             }
 
             $.ajax({
-                url: "{{ route('user-management.user.store') }}",
-                type: "POST",
+                url: url,
+                type: type,
                 dataType: "JSON",
                 data: {
                     id: id,
