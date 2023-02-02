@@ -9,13 +9,34 @@
             <nav>
                 <ul class="metismenu" id="menu">
                     <li><a href="{{ route('home') }}"><i class="ti-dashboard"></i> <span>Dashboard</span></a></li>
-                    <li><a href="{{ route('pengeluaran.index') }}"><i class="ti-export"></i> <span>Penngeluaran</span></a></li>
-                    <li><a href="{{ route('categories.index') }}"><i class="ti-menu"></i> <span>Kategori</span></a></li>
+                    @can('index-pengeluaran')
+                        <li class="@if (true)  @endif">
+                            <a href="javascript:void(0)" aria-expanded="true"><i
+                                    class="ti-export"></i><span>Pengeluaran</span></a>
+                            <ul class="collapse">
+                                <li class=""><a href="{{ route('pengeluaran.index') }}">Data Pengeluaran</a></li>
+                                <li><a href="{{ route('categories.index') }}">Kategori Pengeluaran</a></li>
+                            </ul>
+                        </li>
+                    @endcan
                     
+                    @can('index-pemasukan')
+                        <li class="@if (true)  @endif">
+                            <a href="javascript:void(0)" aria-expanded="true"><i
+                                    class="ti-import"></i><span>Pemasukan</span></a>
+                            <ul class="collapse">
+                                <li class=""><a href="{{ route('pengeluaran.index') }}">Data Pemasukan</a></li>
+                                <li><a href="{{ route('categories.index') }}">Kategori Pemasukan</a></li>
+                            </ul>
+                        </li>
+                    @endcan
+
                     <li class="@if (true)  @endif">
-                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>User Management</span></a>
+                        <a href="javascript:void(0)" aria-expanded="true"><i class="ti-dashboard"></i><span>User
+                                Management</span></a>
                         <ul class="collapse">
-                            <li class=""><a href="{{ route('user-management.role.index') }}">Roles and Permission</a></li>
+                            <li class=""><a href="{{ route('user-management.role.index') }}">Roles and
+                                    Permission</a></li>
                             <li><a href="{{ route('user-management.user.index') }}">User</a></li>
                         </ul>
                     </li>

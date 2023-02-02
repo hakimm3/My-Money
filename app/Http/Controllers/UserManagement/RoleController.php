@@ -18,6 +18,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        // dd(auth()->user()->getAllPermissions());
         if($request->ajax()){
             $data = Role::latest()->get();
             return DataTables::of($data)

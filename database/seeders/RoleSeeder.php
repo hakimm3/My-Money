@@ -44,7 +44,8 @@ class RoleSeeder extends Seeder
             'user',
             'role',
             'permission',
-            'pengeluaran'
+            'pengeluaran',
+            'pemasukan'
         ];
 
         $action = [

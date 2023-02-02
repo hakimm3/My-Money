@@ -12,11 +12,18 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
 {
+    public function __construct()
+     {
+        // $this->middleware('permission:index machine|create machine|update machine|delete mesin');
+        $this->middleware('permission:create-pengeluaran|index-pengeluaran|update-pengeluaran|delete-pengeluaran');
+     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         $data = Pengeluaran::filterMonth()->filterYear()->with('category')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)->get();
