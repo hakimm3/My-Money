@@ -22,14 +22,14 @@ class CategoryController extends Controller
                         return '<span class="badge badge-danger">Tidak Aktif</span>';
                     }
                 })
-                ->addColumn('action', 'category.action')
+                ->addColumn('action', 'pengeluaran.category.action')
                 ->rawColumns(['action', 'status'])
                 ->make(true);
         }
         
         $categories = Category::all();
         $compact = compact('categories');
-        return view('category.index', $compact);
+        return view('pengeluaran.category.index', $compact);
     }
 
     public function store(CategoryRequest $request)

@@ -34,10 +34,10 @@ Auth::routes(['register', false]);
 Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::resource('pengeluaran', App\Http\Controllers\PengeluaranController::class);
+    Route::resource('spending', App\Http\Controllers\PengeluaranController::class)->except('show', 'update', 'create');
     Route::post('pengeluaran/import', [App\Http\Controllers\PengeluaranController::class, 'import'])->name('pengeluaran.import');
 
-    Route::resource('categories', App\Http\Controllers\CategoryController::class)->except(['show', 'update']);
+    Route::resource('spending-categories', App\Http\Controllers\CategoryController::class)->except(['show', 'update']);
 
     // User Management
     Route::prefix('user-management')->as('user-management.')->group(function(){
@@ -45,4 +45,9 @@ Route::middleware('auth')->group(function () {
         Route::post('role-permission/{id}', App\Http\Controllers\UserManagement\RolePermissionController::class)->name('set-role-permission'); 
         Route::resource('user', App\Http\Controllers\UserManagement\UserController::class)->except('create');
     });
+
+    // Pemasukan
+    Route::resource('income', App\Http\Controllers\IncomeController::class)->except(['show', 'update', 'create']);
+    // Kateogri Pemasukan
+    Route::resource('income-categories', App\Http\Controllers\IncomeCategoryController::class)->except(['show', 'update', 'create']);
 });

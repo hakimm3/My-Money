@@ -16,16 +16,16 @@
             let name = $('#name').val();
             let status = $('#status').find(':selected').val();
 
-            $('#btnSave').text('Menyimpan...');
+            $('#btnSave').text('Saving...');
             $('#btnSave').attr('disabled', true);
 
-            let message = 'Data berhasil disimpan';
+            let message = 'Data Saved Successfully';
             if (method == 'update') {
-                message = 'Data berhasil diubah';
+                message = 'Data Updated Successfully';
             }
 
             $.ajax({
-                url: "{{ route('categories.store') }}",
+                url: "{{ route('spending-categories.store') }}",
                 type: "POST",
                 dataType: "JSON",
                 data: {
@@ -46,8 +46,22 @@
                     })
                 },
                 error: function (data) {
-                    console.log('Error:', data);
-                    $('#btnSave').text('Simpan');
+                    var error_message = "";
+                    error_message += "<ul>";
+                    $.each(data.responseJSON.errors, function(key, value) {
+                        error_message += "<li>" + value + "</li>";
+                    });
+                    error_message += "</ul>";
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Peringatan',
+                        html: error_message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    $('#btnSave').text('Save');
                     $('#btnSave').attr('disabled', false);
                 }
             });

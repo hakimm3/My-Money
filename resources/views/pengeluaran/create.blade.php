@@ -1,4 +1,3 @@
-
 @push('scripts')
     <script>
         $(function() {
@@ -55,7 +54,7 @@
             }
 
             $.ajax({
-                url: "{{ route('pengeluaran.store') }}",
+                url: "{{ route('spending.store') }}",
                 type: "POST",
                 dataType: "JSON",
                 data: {

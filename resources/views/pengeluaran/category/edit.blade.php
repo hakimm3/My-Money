@@ -5,7 +5,7 @@
             $('#modal-form').find('.modal-title').text('Edit Kategori');
             $('#form')[0].reset();
             method = 'update'
-            let url = "{{ route('categories.edit', ":id") }}"
+            let url = "{{ route('spending-categories.edit', ":id") }}"
             url = url.replace(':id', id)
             $.ajax({
                 url: url,

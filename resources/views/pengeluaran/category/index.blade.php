@@ -76,7 +76,7 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = '{{ route('categories.destroy', ":id") }}'
+                    let url = '{{ route('spending-categories.destroy', ":id") }}'
                     url = url.replace(':id', id)
                     $.ajax({
                         url: url,
@@ -98,6 +98,6 @@
     </script>
 @endpush
 
-@include('category.edit')
-@include('category.create')
+@include('pengeluaran.category.edit')
+@include('pengeluaran.category.create')
 

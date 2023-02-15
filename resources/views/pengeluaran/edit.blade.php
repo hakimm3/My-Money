@@ -4,7 +4,7 @@
             $('#form')[0].reset()
             $('.modal-title').text('Edit Pengeluaran')
             method = 'update'
-            let url = "{{ route('pengeluaran.edit', ':id') }}"
+            let url = "{{ route('spending.edit', ':id') }}"
             url = url.replace(':id', id)
 
             $.get(url, function(data) {

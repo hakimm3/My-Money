@@ -165,18 +165,14 @@
                         name: 'action'
                     },
                 ],
-                // jika tanggalnya sama maka akan di gabung menjadi 1 row 
-                rowsGroup: [
-                    'date:name',
-            ],
             });
         });
     </script>
 @endpush
 
-@include('pengeluaran.create');
-@include('pengeluaran.edit');
-@include('pengeluaran.import');
+@include('pengeluaran.create')
+@include('pengeluaran.edit')
+@include('pengeluaran.import')
 
 @push('scripts')
     <script>
@@ -191,7 +187,7 @@
                 confirmButtonText: 'Ya, hapus!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = "{{ route('pengeluaran.destroy', ':id') }}"
+                    let url = "{{ route('spending.destroy', ':id') }}"
                     url = url.replace(':id', id)
                     $.ajax({
                         url: url,
