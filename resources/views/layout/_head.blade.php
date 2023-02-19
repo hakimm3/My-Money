@@ -13,8 +13,6 @@
 <link rel="stylesheet" href="{{ asset('/assets/css/metisMenu.css') }}">
 <link rel="stylesheet" href="{{ asset('/assets/css/owl.carousel.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/assets/css/slicknav.min.css') }}">
-<!-- amchart css -->
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 <!-- others css -->
 <link rel="stylesheet" href="{{ asset('/assets/css/typography.css') }}">
 <link rel="stylesheet" href="{{ asset('/assets/css/default-css.css') }}">
@@ -24,3 +22,11 @@
 <script src="{{ asset('/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{{-- AM Chart --}}
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/locales/de_DE.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/geodata/germanyLow.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/fonts/notosans-sc.js"></script>

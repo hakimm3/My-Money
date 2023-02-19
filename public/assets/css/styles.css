@@ -1327,12 +1327,12 @@ table.dbkit-table tr td {
 
 .seofct-icon {
     color: #fff;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
 }
 
 .seofct-icon i {
-    font-size: 52px;
+    font-size: 32px;
     margin-right: 20px;
     vertical-align: middle;
     -webkit-transform: translateY(-5px);
@@ -1341,7 +1341,7 @@ table.dbkit-table tr td {
 }
 
 .seo-fact h2 {
-    font-size: 27px;
+    font-size: 18px;
     color: #fff;
     letter-spacing: 0;
 }
