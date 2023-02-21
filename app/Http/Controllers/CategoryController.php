@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            $data = Category::all();
+            $data = Category::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('status', function($row){

@@ -14,17 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pengeluarans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('category_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
+            $table->uuid('category_id');
             $table->string('description')->nullable();
             $table->date('date')->nullable();
             $table->bigInteger('amount')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

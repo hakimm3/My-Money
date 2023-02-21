@@ -35,9 +35,7 @@
             width: '100%',
             theme: 'classic'
         });
-    </script>
 
-    <script>
         function create() {
             $('#modal-form').modal('show');
             $('#modal-form').find('.modal-title').text('Tambah Pemasukan');
@@ -64,7 +62,7 @@
                     description: $('#description').val(),
                     category_id: $('#category').find(':selected').val(),
                     amount: Number($('#amount').val().replace(/,/g, '')),
-                    user_id: {{ Auth::user()->id }},
+                    user_id: $('#user_id').val(),
                     id : $('#id').val()
                 },
                 success: function(data) {
