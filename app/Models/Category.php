@@ -13,7 +13,7 @@ class Category extends Model
     use SoftDeletes;
     use HasUuids;
     protected $table = 'categories';
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['name', 'status', 'slug'];
 
     public function pengeluaran()
     {

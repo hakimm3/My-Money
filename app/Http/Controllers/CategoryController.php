@@ -6,6 +6,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -36,6 +37,7 @@ class CategoryController extends Controller
     {
         $data = Category::updateOrCreate(['id' => $request->id], [
             'name' => $request->name,
+            'slug' => Str::slug($request->name),   
             'status' => $request->status,
         ]);
 

@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Category;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
@@ -24,26 +25,27 @@ class PengeluaranImport implements ToModel, WithHeadingRow, SkipsEmptyRows, With
     public function model(array $row)
     {
         // jika row tanggal kosong maka isi dengan tanggal sebelumnya
+     
         return Pengeluaran::create([
-            'category_id' => 1,
-            'description' => $row['keterangan'],
-            'date' => $row['tanggal'] ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal'])) : null,
-            'amount' => $row['kredit'],
+            'category_id' => Category::where('slug', $row['categoryslug'])->first()->id,
+            'description' => $row['description'],
+            'date' => $row['date'],
+            'amount' => $row['amount'],
             'user_id' => auth()->user()->id,
         ]);
     }
 
     public function headingRow(): int
     {
-        return 5;
+        return 1;
     }
 
     public function rules(): array
     {
         return [
-            'keterangan' => 'required',
-            'tanggal' => 'required',
-            'kredit' => 'required',
+            'description' => 'required',
+            'date' => 'required',
+            'amount' => 'required',
 
         ];
     }
@@ -51,9 +53,9 @@ class PengeluaranImport implements ToModel, WithHeadingRow, SkipsEmptyRows, With
     public function customValidationMessages()
     {
         return [
-            'keterangan.required' => 'keterangan is required',
-            'tanggal.required' => 'tanggal is required',
-            'kredit.required' => 'kredit is required',
+            'description.required' => 'description is required',
+            'date.required' => 'date is required',
+            'amount.required' => 'amount is required',
         ];
     }
 }

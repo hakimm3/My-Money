@@ -24,6 +24,7 @@
                     <div class="col-6 mb-2">
                         <button class="btn btn-primary btn-sm" onclick="create()">Tambah</button>
                         <button class="btn btn-info btn-sm" onclick="modal_import()">Import</button>
+                        <a href="{{ route('pengeluaran.export') }}" class="btn btn-warning">Export</a>
                     </div>
                     <div class="col-2">
 
@@ -123,6 +124,7 @@
                             <input type="file" class="form-control" name="file" id="file">
                         </div>
                     </form>
+                    <a href="{{ asset('template/pengeluaran.xlsx') }}" class="btn btn-info btn-sm">Template</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

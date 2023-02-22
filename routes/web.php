@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('spending', App\Http\Controllers\PengeluaranController::class)->except('show', 'update', 'create');
     Route::post('pengeluaran/import', [App\Http\Controllers\PengeluaranController::class, 'import'])->name('pengeluaran.import');
+    Route::get('pengeluaran/export', [App\Http\Controllers\PengeluaranController::class, 'export'])->name('pengeluaran.export');
 
     Route::resource('spending-categories', App\Http\Controllers\CategoryController::class)->except(['show', 'update']);
 

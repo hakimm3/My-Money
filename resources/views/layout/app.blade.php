@@ -2,8 +2,8 @@
 <html class="no-js" lang="en">
 
 <head>
-  @include('layout._head')
-  @stack('css')
+    @include('layout._head')
+    @stack('css')
 </head>
 
 <body>
@@ -18,7 +18,7 @@
     <!-- page container area start -->
     <div class="page-container">
         <!-- sidebar menu area start -->
-       @include('layout.aside')
+        @include('layout.aside')
         <!-- sidebar menu area end -->
         <!-- main content area start -->
         <div class="main-content">
@@ -36,15 +36,16 @@
         <!-- footer area start-->
         <footer>
             <div class="footer-area">
-                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.
+                </p>
             </div>
         </footer>
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
     <!-- offset area start -->
-  @include('layout._script')
-  @stack('scripts')
+    @stack('scripts')
+    @include('layout._script')
 </body>
 
 </html>

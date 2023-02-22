@@ -18,17 +18,20 @@ class IncomeCategorySeeder extends Seeder
         $incomeCategories = [
             [
                 'name' => 'Gaji',
+                'slug' => 'gaji',
             ],
             [
                 'name' => 'Bonus',
+                'slug' => 'bonus',
             ],
             [
                 'name' => 'Lainnya',
+                'slug' => 'lainnya',
             ]
         ];
 
         foreach ($incomeCategories as $incomeCategory) {
-            IncomeCategory::updateOrCreate(['name' => $incomeCategory['name']], $incomeCategory);
+            IncomeCategory::create($incomeCategory);
         }
     }
 }

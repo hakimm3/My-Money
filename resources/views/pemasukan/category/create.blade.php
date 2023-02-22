@@ -20,12 +20,7 @@
                 url: "{{ route('income-categories.store') }}",
                 type: "POST",
                 dataType: "JSON",
-                data: {
-                    id: $('#id').val(),
-                    name: $('#name').val(),
-                    status: $('#status').find(':selected').val(),
-                    _token: "{{ csrf_token() }}"
-                },
+                data: $('#form').serialize(),
                 success: function(data) {
                     $('#modal-form').modal('hide');
                     $('#btnSave').text('Simpan');

@@ -14,6 +14,7 @@ class IncomeCategory extends Model
     protected $table = 'income_categories';
     protected $fillable = [
         'name',
+        'slug',
         'status',
     ];
 }

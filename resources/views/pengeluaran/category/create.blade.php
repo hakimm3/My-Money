@@ -12,9 +12,7 @@
         }
 
         function store(){
-            let id = $('#id').val();
-            let name = $('#name').val();
-            let status = $('#status').find(':selected').val();
+            let data = $('#form').serialize();
 
             $('#btnSave').text('Saving...');
             $('#btnSave').attr('disabled', true);
@@ -28,11 +26,7 @@
                 url: "{{ route('spending-categories.store') }}",
                 type: "POST",
                 dataType: "JSON",
-                data: {
-                    id: id,
-                    name: name,
-                    status: status,
-                },
+                data: data,
                 success: function (data) {
                     $('#modal-form').modal('hide');
                     $('#btnSave').text('Simpan');

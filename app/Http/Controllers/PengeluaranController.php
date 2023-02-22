@@ -135,4 +135,8 @@ class PengeluaranController extends Controller
             'message' => 'Data berhasil diimport'
         ]);
     }
+
+    public function export(){
+        return Excel::download(new \App\Exports\PengeluaranExport, 'pengeluaran.xlsx');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IncomeCategoryRequest;
 use App\Models\IncomeCategory;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
 
@@ -30,7 +31,11 @@ class IncomeCategoryController extends Controller
     }
 
     public function store(IncomeCategoryRequest $request){
-        IncomeCategory::updateOrCreate(['id' => $request->id], $request->validated());
+        IncomeCategory::updateOrCreate(['id' => $request->id], [
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'status' => $request->status,
+        ]);
         return response(200);
     }
 

@@ -31,6 +31,7 @@
     <x-admin.modal-form-component>
         @slot('modalBody')
             <form id="form">
+                @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" class="form-control" id="name" placeholder="Name">
