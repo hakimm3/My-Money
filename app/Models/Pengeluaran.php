@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Pengeluaran extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
     protected $table = 'pengeluarans';
     protected $fillable = ['category_id', 'description', 'date', 'amount', 'user_id'];
 

@@ -96,6 +96,7 @@
                     <input type="text" name="amount" id="amount" class="form-control">
                 </div>
                 <input type="hidden" name="id" id="id">
+                <input type="hidden" name="user_id" id="user_id" value="{{ auth()->user()->id }}">
             </form>
         @endslot
     </x-admin.modal-form-component>

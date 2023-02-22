@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class IncomeCategoryController extends Controller
 {
     public function index(Request $request){
-        $data = \App\Models\IncomeCategory::all();
+        $data = \App\Models\IncomeCategory::latest()->get();
         if($request->ajax()){
             return DataTables::of($data)
                 ->addIndexColumn()
