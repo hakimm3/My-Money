@@ -75,7 +75,7 @@
                         title: 'Berhasil',
                         text: message,
                     })
-                    $('#table').DataTable().ajax.reload();
+                    table.ajax.reload();
                 },
                 error: function(data) {
                     var error_message = "";

@@ -139,11 +139,9 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
+           let table =  $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 responsive: true,
                 ajax: "",
                 columns: [{
@@ -172,7 +170,6 @@
                     },
                 ],
             });
-        });
     </script>
 @endpush
 
@@ -202,12 +199,12 @@
                             _token: "{{ csrf_token() }}"
                         },
                         success: function(data) {
-                            $('#table').DataTable().ajax.reload();
                             Swal.fire(
                                 'Terhapus!',
                                 'Data berhasil di hapus.',
                                 'success'
                             )
+                            table.ajax.reload()
                         }
                     })
                 }

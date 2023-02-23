@@ -67,9 +67,9 @@
                 },
                 success: function(data) {
                     $('#modal-form').modal('hide');
-                    $('#table').DataTable().ajax.reload();
                     $('#btnSave').text('Save');
                     $('#btnSave').attr('disabled', false);
+                    table.ajax.reload();
                     
                     // sweet alert for 3 seconds
                     Swal.fire({

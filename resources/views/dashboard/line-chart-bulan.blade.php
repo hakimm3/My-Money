@@ -13,7 +13,7 @@
         @endforeach
     </script>
     <script>
-        const chart_1 = $('#linechart');
+        const chart_1 = document.getElementById('linechart');
         const linechart = new Chart(chart_1, {
             type: 'line',
             data: {

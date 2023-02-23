@@ -11,6 +11,15 @@
             $('#btn-import').text('Importing...');
             $('#btn-import').attr('disabled', true);
 
+            // sweet alert loading
+            Swal.fire({
+                title: 'Loading...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading()
+                },
+            })
+
 
             $.ajax({
                 url: "{{ route('pengeluaran.import') }}",
@@ -23,12 +32,16 @@
                     $('#modal-import').modal('hide');
                     $('#btn-import').text('Import');
                     $('#btn-import').attr('disabled', false);
+                    // sweet alert success message dalam 1.5 detik
                     Swal.fire({
+                        position: 'center',
                         icon: 'success',
                         title: 'Berhasil',
                         text: 'Data berhasil diimport',
+                        showConfirmButton: false,
+                        timer: 1500
                     })
-                    $('#table').DataTable().ajax.reload();
+                    table.ajax.reload();
                 },
                 error: function(data) {
                     var error_message = "";
