@@ -45,7 +45,7 @@
             var xAxis = chart.xAxes.push(
                 am5xy.CategoryAxis.new(root, {
                     maxDeviation: 0.3,
-                    categoryField: "country",
+                    categoryField: "name",
                     renderer: xRenderer,
                     tooltip: am5.Tooltip.new(root, {})
                 })
@@ -73,14 +73,15 @@
                     yAxis: yAxis,
                     valueYField: "value",
                     sequencedInterpolation: true,
-                    categoryXField: "country"
+                    categoryXField: "name"
                 })
             );
 
             series.columns.template.setAll({
                 width: am5.percent(120),
                 fillOpacity: 0.9,
-                strokeOpacity: 0
+                strokeOpacity: 0,
+                tooltipText: "{categoryX}: {valueY}"
             });
             series.columns.template.adapters.add("fill", (fill, target) => {
                 return chart.get("colors").getIndex(series.columns.indexOf(target));
@@ -102,7 +103,7 @@
             var data = [];
             @foreach ($totalPengeluaran as $item)
                 data.push({
-                    country: '{{ $item->name }}',
+                    name: '{{ $item->name }}',
                     value: {{ $item->total }}
                 })
             @endforeach

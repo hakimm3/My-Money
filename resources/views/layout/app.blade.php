@@ -44,8 +44,8 @@
     </div>
     <!-- page container area end -->
     <!-- offset area start -->
-    @stack('scripts')
     @include('layout._script')
+    @stack('scripts')
 </body>
 
 </html>

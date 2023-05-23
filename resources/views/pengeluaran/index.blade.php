@@ -32,33 +32,8 @@
                     <div class="col-4">
                         <form>
                             <div class="form-row align-items-center justify-content-end">
-                                <div class="col-sm-4">
-                                    <label class="sr-only" for="inlineFormInputName">Name</label>
-                                    <select name="month" class="form-control">
-                                        <option value="" @if (request()->month == '') selected @endif>All</option>
-                                        <option value="january" @if (request()->month == 'january') selected @endif>January</option>
-                                        <option value="february" @if (request()->month == 'february') selected @endif>February</option>
-                                        <option value="march" @if (request()->month == 'march') selected @endif>March</option>
-                                        <option value="april" @if (request()->month == 'april') selected @endif>April</option>
-                                        <option value="may" @if (request()->month == 'may') selected @endif>May</option>
-                                        <option value="june" @if (request()->month == 'june') selected @endif>June</option>
-                                        <option value="july" @if (request()->month == 'july') selected @endif>July</option>
-                                        <option value="august" @if (request()->month == 'august') selected @endif>August</option>
-                                        <option value="september" @if (request()->month == 'september') selected @endif>September
-                                        </option>
-                                        <option value="october" @if (request()->month == 'october') selected @endif>October</option>
-                                        <option value="november" @if (request()->month == 'november') selected @endif>November
-                                        </option>
-                                        <option value="december" @if (request()->month == 'december') selected @endif>December
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="sr-only" for="inlineFormInputGroupUsername">Year</label>
-                                    <div class="input-group">
-                                        <input type="year" name="year" value="{{ request()->year }}" class="form-control"
-                                            id="inlineFormInputGroupUsername" placeholder="Year">
-                                    </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" name="dates">
                                 </div>
                                 <div class="col-auto">
                                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -136,40 +111,54 @@
 
 
 @endsection
+@push('css')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endpush
+@push('scripts')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script>
+        $('input[name="dates"]').daterangepicker();
+        // disable button submit
+        // $('#btnSubmit').prop('disabled', true);
+    </script>c
+@endpush
+
 
 @push('scripts')
     <script>
-           let table =  $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: "",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'date',
-                        name: 'date'
-                    },
-                    {
-                        data: 'description',
-                        name: 'description'
-                    },
-                    {
-                        data: 'category',
-                        name: 'category'
-                    },
-                    {
-                        data: 'amount',
-                        name: 'amount'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action'
-                    },
-                ],
-            });
+        let table = $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: "",
+            columns: [{
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'category',
+                    name: 'category'
+                },
+                {
+                    data: 'amount',
+                    name: 'amount'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                },
+            ],
+        });
     </script>
 @endpush
 

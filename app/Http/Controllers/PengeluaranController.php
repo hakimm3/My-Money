@@ -26,7 +26,11 @@ class PengeluaranController extends Controller
 
     public function index(Request $request)
     {
-        $data = Pengeluaran::filterMonth()->filterYear()->with('category')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)->get();
+        $data = Pengeluaran::with('category')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)
+                ->when($request->dates, function($query) use ($request){
+                    $dates = explode(' - ', $request->dates);
+                    $query->whereBetween('date', [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')]);
+                })->get();
         if($request->ajax()){
             return DataTables::of($data)
                 ->addIndexColumn()

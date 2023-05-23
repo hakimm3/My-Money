@@ -24,7 +24,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request  $request)
     {   
         $totalBulanIni = Pengeluaran::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->sum('amount');
         $incomeThisMonth = Income::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->sum('amount');
@@ -34,8 +34,19 @@ class HomeController extends Controller
         $incomeThisMonth = 'Rp. '.number_format($incomeThisMonth, 0, ',', '.');
         $balanceThisMonth = 'Rp. '.number_format($balanceThisMonth, 0, ',', '.');
 
+        $dates = [];
+        if($request->date){
+            $dates = explode(' - ', $request->date);
+            $dates = [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')];
+        }
+        $baseQuery = Pengeluaran::where('user_id', auth()->user()->id)
+        ->filterYear()
+        ->when($request->date, function($query) use ($dates){
+            $query->whereBetween('date', $dates);
+        });
+
         // total pengeluran grup berdasarkan kategori dan dapatkan nama kategorinya
-        $totalPengeluaran = Pengeluaran::where('user_id', auth()->user()->id)->filterMonth()->filterYear()->selectRaw('category_id, sum(amount) as total')
+        $totalPengeluaran = $baseQuery->clone()->selectRaw('category_id, sum(amount) as total')
             ->groupBy('category_id')
             ->with('category')
             ->get();
@@ -46,7 +57,7 @@ class HomeController extends Controller
         });
 
         // total pengeluaran per bulan
-        $totalPengeluaranPerBulan = Pengeluaran::where('user_id', auth()->user()->id)->filterMonth()->filterYear()->selectRaw('month(date) as bulan, sum(amount) as total')
+        $totalPengeluaranPerBulan = $baseQuery->clone()->selectRaw('month(date) as bulan, sum(amount) as total')
             ->groupBy('bulan')
             ->get();
         $totalPengeluaranPerBulan = $totalPengeluaranPerBulan->map(function($item){
