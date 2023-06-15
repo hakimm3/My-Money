@@ -27,6 +27,7 @@ class PengeluaranRequest extends FormRequest
             'user_id' => 'required',
             'date' => 'required',
             'category_id' => 'required',
+            'event_id' => 'nullable',
             'amount' => 'required|numeric',
             'description' => 'required',
         ];

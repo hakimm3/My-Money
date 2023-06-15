@@ -26,11 +26,11 @@ class PengeluaranController extends Controller
 
     public function index(Request $request)
     {
-        $data = Pengeluaran::with('category')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)
+        $data = Pengeluaran::with('category', 'event')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)
                 ->when($request->dates, function($query) use ($request){
                     $dates = explode(' - ', $request->dates);
                     $query->whereBetween('date', [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')]);
-                })->get();
+                });
         if($request->ajax()){
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -40,6 +40,9 @@ class PengeluaranController extends Controller
                 ->addColumn('category', function($row){
                     return $row->category->name;
                 })
+                ->addColumn('event', function($row){
+                    return $row->event->name ?? '-';
+                })
                 ->addColumn('amount', function($row){
                     return 'Rp. '.number_format($row->amount, 0, ',', '.');
                 })
@@ -48,8 +51,9 @@ class PengeluaranController extends Controller
                 ->make(true);
         }
 
+        $events = \App\Models\Event::all();
         $categories = Category::all();
-        $compact = compact('categories');
+        $compact = compact('categories', 'events');
         return view('pengeluaran.index', $compact);
     }
 

@@ -11,11 +11,16 @@ class Pengeluaran extends Model
 {
     use HasFactory, HasUuids;
     protected $table = 'pengeluarans';
-    protected $fillable = ['category_id', 'description', 'date', 'amount', 'user_id'];
+    protected $fillable = ['category_id', 'description', 'date', 'amount', 'user_id', 'event_id'];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 
     public function scopeFilterMonth($query)

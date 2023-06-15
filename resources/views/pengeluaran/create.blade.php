@@ -43,6 +43,7 @@
             let date = $('#date').val();
             let description = $('#description').val();
             let category = $('#category').find(':selected').val();
+            let event = $('#event').find(':selected').val();
             let amount = Number($('#amount').val().replace(/,/g, ''));
 
             $('#btnSave').text('Menyimpan...');
@@ -62,6 +63,7 @@
                     date: date,
                     description: description,
                     category_id: category,
+                    event_id: event,
                     amount: amount,
                     user_id: "{{ Auth::user()->id }}",
                     _token: "{{ csrf_token() }}"

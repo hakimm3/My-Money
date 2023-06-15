@@ -47,6 +47,7 @@
                     <th>Date</th>
                     <th>Description</th>
                     <th>Category</th>
+                    <th>Event</th>
                     <th>Amount</th>
                 @endslot
             </x-admin.data-table-component>
@@ -68,6 +69,14 @@
                     <label for="">Kategori</label>
                     <select name="category" id="category" class="form-control">
                         @foreach ($categories as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Event</label>
+                    <select name="event" id="event" class="form-control">
+                        @foreach ($events as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
                     </select>
@@ -135,27 +144,40 @@
             ajax: "",
             columns: [{
                     data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
+                    name: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false,
                 },
                 {
                     data: 'date',
-                    name: 'date'
+                    name: 'date',
+                    orderable: false,
                 },
                 {
                     data: 'description',
-                    name: 'description'
+                    name: 'description',
+                    orderable: false,
                 },
                 {
                     data: 'category',
-                    name: 'category'
+                    name: 'category',
+                    orderable: false,
+                },
+                {
+                    data: 'event',
+                    name: 'event',
+                    orderable: false,
                 },
                 {
                     data: 'amount',
-                    name: 'amount'
+                    name: 'amount',
+                    orderable: false,
                 },
                 {
                     data: 'action',
-                    name: 'action'
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
                 },
             ],
         });
