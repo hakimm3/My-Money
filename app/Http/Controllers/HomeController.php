@@ -64,9 +64,32 @@ class HomeController extends Controller
             $item->bulan = Date('F', mktime(0, 0, 0, $item->bulan, 10));
             return $item;
         });
-        // $totalPengeluaranPerBulan = Pengeluaran::where('user_id', auth()->user()->id)->filterMonth()->filterYear()->get();
 
-        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth');
+        // total pemasukan per bulan
+        $totalPemasukanPerBulan = Income::where('user_id', auth()->user()->id)
+            ->when($request->year, function($query) use ($request){
+                $query->whereYear('date', $request->year);
+            })
+            ->when($request->date, function($query) use ($dates){
+                $query->whereBetween('date', $dates);
+            })
+            ->selectRaw('month(date) as bulan, sum(amount) as total')
+            ->groupBy('bulan')
+            ->get();
+        $totalPemasukanPerBulan = $totalPemasukanPerBulan->map(function($item){
+            $item->bulan = Date('F', mktime(0, 0, 0, $item->bulan, 10));
+            return $item;
+        });
+
+        
+        // total pemasukan dan pengeluaran per bulan
+        $totalPemasukanPengeluaranPerBulan = $totalPengeluaranPerBulan->map(function($item) use ($totalPemasukanPerBulan){
+            $item->totalPemasukan = $totalPemasukanPerBulan->where('bulan', $item->bulan)->first()->total ?? 0;
+            return $item;
+        });
+
+
+        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'totalPemasukanPengeluaranPerBulan');
         return view('home', $compact);
     }
 }

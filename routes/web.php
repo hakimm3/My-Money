@@ -51,4 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('income', App\Http\Controllers\IncomeController::class)->except(['show', 'update', 'create']);
     // Kateogri Pemasukan
     Route::resource('income-categories', App\Http\Controllers\IncomeCategoryController::class)->except(['show', 'update', 'create']);
+
+    // Pricing
+    Route::resource('pricing', App\Http\Controllers\PricingController::class)->except(['show', 'update', 'create']);
 });

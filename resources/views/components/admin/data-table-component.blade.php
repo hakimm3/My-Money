@@ -4,8 +4,8 @@
         <div class="row">
             {{ $button }}
         </div>
-        <div class="data-tables datatable-primary">
-            <table id="{{ $id }}" class="table-striped table-responsive">
+        <div class="data-tables datatable-primary table-hover">
+            <table id="{{ $id }}" class="table-bordered table-responsive">
                 <thead class="text-capitalize">
                     <tr>
                         <th width="2%">No</th>

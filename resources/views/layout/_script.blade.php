@@ -19,6 +19,11 @@
       zingchart.MODULESDIR = "https://cdn.zingchart.com/modules/";
       ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "ee6b7db5b51705a13dc2339db3edaf6d"];
   </script>
+
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
   <!-- all line chart activation -->
   <script src="{{ asset('/assets/js/line-chart.js') }}"></script>
   <!-- all pie chart -->

@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="row justify-content-end my-4">
-        <div class="col-4">
+        <div class="col-sm-12 col-md-4">
             <form>
                 <div class="form-row align-items-center justify-content-end">
                     <div class="col-sm-8">
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-4 mt-2">
+        <div class="col-sm-12 col-md-4 mt-2">
             <div class="card">
                 <div class="seo-fact sbg2">
                     <div class="p-4 d-flex justify-content-between align-items-center">
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 mt-2">
+        <div class="col-sm-12 col-md-4 mt-2">
             <div class="card">
                 <div class="seo-fact sbg3">
                     <div class="p-4 d-flex justify-content-between align-items-center">
@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4 mt-2">
+        <div class="col-sm-12 col-md-4 mt-2">
             <div class="card">
                 <div class="seo-fact sbg4">
                     <div class="p-4 d-flex justify-content-between align-items-center">
@@ -64,7 +64,7 @@
         <div class="col-12 mt-4">
             <div class="card">
                 <div class="card-body">
-                    @include('dashboard.line-chart-bulan')
+                    @include('dashboard.line-chart')
                 </div>
             </div>
         </div>
@@ -80,7 +80,5 @@
 
     <script>
         $('input[name="date"]').daterangepicker();
-        // disable button submit
-        // $('#btnSubmit').prop('disabled', true);
-    </script>c
+    </script>
 @endpush

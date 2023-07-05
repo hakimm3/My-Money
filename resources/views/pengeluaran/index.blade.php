@@ -22,9 +22,9 @@
 
                 @slot('button')
                     <div class="col-6 mb-2">
-                        <button class="btn btn-primary btn-sm" onclick="create()">Tambah</button>
-                        <button class="btn btn-info btn-sm" onclick="modal_import()">Import</button>
-                        <a href="{{ route('pengeluaran.export') }}" class="btn btn-warning">Export</a>
+                        <button class="btn btn-primary btn-sm my-2" onclick="create()">Tambah</button>
+                        <button class="btn btn-info btn-sm my-2" onclick="modal_import()">Import</button>
+                        <a href="{{ route('pengeluaran.export') }}" class="btn btn-warning my-2">Export</a>
                     </div>
                     <div class="col-2">
 
@@ -141,6 +141,13 @@
             processing: true,
             serverSide: true,
             responsive: true,
+            autoWidth: false,
+            language: {
+                'paginate': {
+                    'previous': '<span class="fa fa-arrow-left"></span>',
+                    'next': '<span class="fa fa-arrow-right"></span>'
+                }
+            },
             ajax: "",
             columns: [{
                     data: 'DT_RowIndex',
