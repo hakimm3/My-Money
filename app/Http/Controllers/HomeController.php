@@ -26,8 +26,8 @@ class HomeController extends Controller
      */
     public function index(Request  $request)
     {   
-        $totalBulanIni = Pengeluaran::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->sum('amount');
-        $incomeThisMonth = Income::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->sum('amount');
+        $totalBulanIni = Pengeluaran::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
+        $incomeThisMonth = Income::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
         $balanceThisMonth = $incomeThisMonth - $totalBulanIni;
         
         $totalBulanIni = 'Rp. '.number_format($totalBulanIni, 0, ',', '.');

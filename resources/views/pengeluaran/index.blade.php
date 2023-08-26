@@ -76,6 +76,7 @@
                 <div class="form-group">
                     <label for="">Event</label>
                     <select name="event" id="event" class="form-control">
+                        <option value="">Pilih event jika ada</option>
                         @foreach ($events as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
