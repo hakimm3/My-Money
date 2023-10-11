@@ -35,6 +35,7 @@
             $('#modal-form').modal('show');
             $('#modal-form').find('.modal-title').text('Tambah Pengeluaran');
             $('#form')[0].reset();
+            $("#id").val('');
             method = 'store'
         }
 

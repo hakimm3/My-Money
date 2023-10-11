@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Pengeluaran;
 use App\Models\Income;
@@ -41,6 +42,9 @@ class HomeController extends Controller
         }
         $baseQuery = Pengeluaran::where('user_id', auth()->user()->id)
         ->filterYear()
+        ->when($request->category_id, function($query) use ($request){
+            $query->where('category_id', $request->category_id);
+        })
         ->when($request->date, function($query) use ($dates){
             $query->whereBetween('date', $dates);
         });
@@ -88,8 +92,8 @@ class HomeController extends Controller
             return $item;
         });
 
-
-        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'totalPemasukanPengeluaranPerBulan');
+        $categories =  Category::get();
+        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'totalPemasukanPengeluaranPerBulan', 'categories');
         return view('home', $compact);
     }
 }

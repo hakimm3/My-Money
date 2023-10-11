@@ -8,10 +8,18 @@
 
 @section('content')
     <div class="row justify-content-end my-4">
-        <div class="col-sm-12 col-md-4">
-            <form>
+        <div class="col-sm-12 col-md-8">
+            <form method="GET">
                 <div class="form-row align-items-center justify-content-end">
-                    <div class="col-sm-8">
+                    <div class="col-sm-4">
+                        <select name="category_id" id="category" class="form-control">
+                            <option value="">All Category</option>
+                          @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" {{( request()->category_id ==  $category->id) ? 'selected' : '' }}>{{ $category->name }}</option>
+                          @endforeach
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
                         <input type="text" class="form-control" id="date" name="date">
                     </div>
                     <div class="col-auto">
@@ -80,5 +88,8 @@
 
     <script>
         $('input[name="date"]').daterangepicker();
+        @if (request()->date)
+            $('input[name="date"]').val('{{ request()->date }}');
+        @endif
     </script>
 @endpush
