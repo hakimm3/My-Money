@@ -38,8 +38,10 @@ class SendMail extends Command
             mkdir(storage_path('app/public/backup'));
         }
 
-        Excel::store(new IncomeExport(1), 'public/backup/incomes.xlsx');
-        Excel::store(new PengeluaranExport(1), 'public/backup/pengeluaran.xlsx');
+        $user = \App\Models\User::where('email', 'admin@duit.id')->first();
+
+        Excel::store(new IncomeExport($user->id), 'public/backup/incomes.xlsx');
+        Excel::store(new PengeluaranExport($user->id), 'public/backup/pengeluaran.xlsx');
 
         Mail::send('emails.backup', [], function($message) use ($to, $title) {
             $message->to($to)->subject($title);
