@@ -6,15 +6,23 @@ use App\Models\Pengeluaran;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class PengeluaranExport implements FromCollection, WithHeadings
+class PengeluaranExport implements FromCollection, WithHeadings, ShouldAutoSize
 {
     /**
      * @return \Illuminate\Support\Collection
      */
+
+    private $user_id;
+    public function __construct($user_id)
+    {
+        $this->user_id = $user_id;
+    }
+
     public function collection()
     {
-        $pengeluaran = Pengeluaran::all();
+        $pengeluaran = Pengeluaran::with('category')->where('user_id', $this->user_id)->latest()->get();
         $xport = [];
         foreach ($pengeluaran as $key => $value) {
             $xport[] = [

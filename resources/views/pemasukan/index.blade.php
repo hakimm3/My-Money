@@ -20,6 +20,8 @@
                 @slot('button')
                     <div class="col-6 mb-2">
                         <button class="btn btn-primary btn-sm" onclick="create()">Tambah</button>
+                        <button class="btn btn-info btn-sm" onclick="showModalImport()">Import</button>
+                        <button class="btn btn-warning btn-sm"><a href="{{ route('income.export') }}">Export</a></button>
                     </div>
                     <div class="col-2">
 
@@ -100,6 +102,7 @@
             </form>
         @endslot
     </x-admin.modal-form-component>
+    @include('pemasukan.import')
 @endsection
 
 @push('scripts')

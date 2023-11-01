@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
 
     // Pemasukan
     Route::resource('income', App\Http\Controllers\IncomeController::class)->except(['show', 'update', 'create']);
+    Route::post('income/import', App\Http\Controllers\Pmasukan\ImportPemsaukanController::class)->name('income.import');
+    Route::get('income/export', App\Http\Controllers\Pmasukan\ExportPemsaukanController::class)->name('income.export');
+
     // Kateogri Pemasukan
     Route::resource('income-categories', App\Http\Controllers\IncomeCategoryController::class)->except(['show', 'update', 'create']);
 
