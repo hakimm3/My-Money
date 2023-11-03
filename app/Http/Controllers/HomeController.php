@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Cron;
 use Illuminate\Http\Request;
 use App\Models\Pengeluaran;
 use App\Models\Income;
@@ -92,8 +93,26 @@ class HomeController extends Controller
             return $item;
         });
 
+        // pengeluaran dengan kategori makanan pokok selama 1 tahun terakhir
+        $averageEat = Pengeluaran::where('user_id', auth()->user()->id)
+            ->whereHas('category', function($query){
+                $query->where('name', 'Makanan Pokok');
+            })
+            ->whereYear('date', Carbon::now()->subYear()->year)
+            ->average('amount');
+
+        $averageKebutuhanDasar = Pengeluaran::where('user_id', auth()->user()->id)
+            ->whereHas('category', function($query){
+                $query->where('name', 'Kebutuhan Dasar');
+            })
+            ->whereYear('date', Carbon::now()->subYear()->year)
+            ->average('amount');
+
+        // nex backup
+        $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y H:i:s');
+
         $categories =  Category::get();
-        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'totalPemasukanPengeluaranPerBulan', 'categories');
+        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'totalPemasukanPengeluaranPerBulan', 'categories', 'nextBackup', 'averageEat', 'averageKebutuhanDasar');
         return view('home', $compact);
     }
 }

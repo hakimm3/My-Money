@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('send:main')->everyMinute()
         ->when(function () {
-            return Cron::shouldRun('send:main', 7);
+            return Cron::shouldRun('send:main', 1);
         });
     }
 

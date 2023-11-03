@@ -25,7 +25,7 @@ class IncomeSeeder extends Seeder
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(100000, 1000000),
                 'description' => $faker->sentence,
-                'date' => $faker->date,
+                'date' => $faker->dateTimeBetween('-1 years', 'now')
             ]);
         }
     }

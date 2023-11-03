@@ -60,6 +60,36 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-12 col-md-4 mt-2">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Average Eat / Month in  Last 1 Year</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{  'Rp. '.number_format($averageEat, 0, ',', '.'); }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 mt-2">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Average Kebutuhan Dasar / Month in  Last 1 Year</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{  'Rp. '.number_format($averageKebutuhanDasar, 0, ',', '.'); }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4 mt-2">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Next Backup</h5>
+                    <div class="metric-value d-inline-block">
+                        <h4 class="mb-1">{{ $nextBackup }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-12 mt-4">
@@ -81,6 +111,7 @@
 
 @push('css')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="{{ asset('/assets/libs/css/style.css') }}">
 @endpush
 @push('scripts')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

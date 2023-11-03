@@ -23,7 +23,7 @@ class PengeluaranSeeder extends Seeder
                 'user_id' => $user->random()->id,
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(10000, 100000),
-                'date' => $faker->dateTimeBetween('-3 years', 'now'),
+                'date' => $faker->dateTimeBetween('-1 years', 'now'),
                 'description' => $faker->sentence(5),
             ]);
         }

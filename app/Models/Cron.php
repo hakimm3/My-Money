@@ -22,7 +22,7 @@ class Cron extends Model
         if ($cron && $cron->next_run > $now->timestamp) {
             return false;
         }
-        Cron::updateOrCreate(['command' => $command], ['next_run' => $now->addDay($days)->timestamp]);
+        Cron::updateOrCreate(['command' => $command], ['next_run' => $now->addMinutes($days)->timestamp, 'last_run' => $now->timestamp]);
         return true;
     }
 }
