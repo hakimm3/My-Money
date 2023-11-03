@@ -85,7 +85,7 @@
                 <div class="card-body">
                     <h5 class="text-muted">Next Backup</h5>
                     <div class="metric-value d-inline-block">
-                        <h4 class="mb-1">{{ $nextBackup }}</h4>
+                        <h3 class="mb-1">{{ $nextBackup }}</h3>
                     </div>
                 </div>
             </div>

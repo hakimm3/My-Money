@@ -98,15 +98,21 @@ class HomeController extends Controller
             ->whereHas('category', function($query){
                 $query->where('name', 'Makanan Pokok');
             })
-            ->whereYear('date', Carbon::now()->subYear()->year)
-            ->average('amount');
+            ->whereBetween('date', [Carbon::now()->subYear(), Carbon::now()])
+            ->selectRaw('month(date) as bulan, sum(amount) as total')
+            ->groupBy('bulan')
+            ->get()
+            ->average('total');
 
         $averageKebutuhanDasar = Pengeluaran::where('user_id', auth()->user()->id)
             ->whereHas('category', function($query){
                 $query->where('name', 'Kebutuhan Dasar');
             })
-            ->whereYear('date', Carbon::now()->subYear()->year)
-            ->average('amount');
+            ->whereBetween('date', [Carbon::now()->subYear(), Carbon::now()])
+            ->selectRaw('month(date) as bulan, sum(amount) as total')
+            ->groupBy('bulan')
+            ->get()
+            ->average('total');
 
         // nex backup
         $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y H:i:s');
