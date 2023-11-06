@@ -34,21 +34,36 @@ class SendMail extends Command
         $to = "hakimpbg@gmail.com"; 
         $title = "Backup Data";
 
-        if(!is_dir(storage_path('app/public/backup'))){
-            mkdir(storage_path('app/public/backup'));
+     
+
+        // $user = \App\Models\User::where('email', 'admin@duit.id')->first();
+
+        // Excel::store(new IncomeExport($user->id), 'public/backup/incomes.xlsx');
+        // Excel::store(new PengeluaranExport($user->id), 'public/backup/pengeluaran.xlsx');
+
+        // Mail::send('emails.backup', [], function($message) use ($to, $title) {
+        //     $message->to($to)->subject($title);
+        //     $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
+        //     $message->attach(storage_path('app/public/backup/incomes.xlsx'));
+        //     $message->attach(storage_path('app/public/backup/pengeluaran.xlsx'));
+        // });
+
+        $users = \App\Models\User::all();
+        foreach($users as $user){
+            if(!is_dir(storage_path('app/public/backup/'. $user->email))){
+                mkdir(storage_path('app/public/backup/'. $user->email));
+            }
+
+            Excel::store(new IncomeExport($user->id), 'public/backup/'. $user->email .'/incomes.xlsx');
+            Excel::store(new PengeluaranExport($user->id), 'public/backup/'. $user->email .'/pengeluaran.xlsx');
+
+            Mail::send('emails.backup', [], function($message) use ($to, $title, $user) {
+                $message->to($user->email)->subject($title);
+                $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
+                $message->attach(storage_path('app/public/backup/'. $user->email .'/incomes.xlsx'));
+                $message->attach(storage_path('app/public/backup/'. $user->email .'/pengeluaran.xlsx'));
+            });
         }
-
-        $user = \App\Models\User::where('email', 'admin@duit.id')->first();
-
-        Excel::store(new IncomeExport($user->id), 'public/backup/incomes.xlsx');
-        Excel::store(new PengeluaranExport($user->id), 'public/backup/pengeluaran.xlsx');
-
-        Mail::send('emails.backup', [], function($message) use ($to, $title) {
-            $message->to($to)->subject($title);
-            $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
-            $message->attach(storage_path('app/public/backup/incomes.xlsx'));
-            $message->attach(storage_path('app/public/backup/pengeluaran.xlsx'));
-        });
 
     }
 }
