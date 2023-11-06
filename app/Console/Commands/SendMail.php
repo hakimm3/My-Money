@@ -31,7 +31,7 @@ class SendMail extends Command
      */
     public function handle()
     {
-        $to = "trisaabdul@gmail.com";
+        $to = "hakimpbg@gmail.com"; 
         $title = "Backup Data";
 
         if(!is_dir(storage_path('app/public/backup'))){
