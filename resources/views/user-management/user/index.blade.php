@@ -91,6 +91,9 @@
                     $.ajax({
                         url: url,
                         type: 'DELETE',
+                        data: {
+                            '_token': '{{ csrf_token() }}'
+                        },
                         success: function (response) {
                             if (response.status) {
                                 Swal.fire(
