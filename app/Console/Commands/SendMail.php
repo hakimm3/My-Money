@@ -39,15 +39,15 @@ class SendMail extends Command
                 mkdir(storage_path('app/public/backup/'. $user->email));
             }
 
-            Excel::store(new IncomeExport($user->id), 'public/backup/'. $user->email .'/incomes.xlsx');
-            Excel::store(new PengeluaranExport($user->id), 'public/backup/'. $user->email .'/pengeluaran.xlsx');
+            // Excel::store(new IncomeExport($user->id), 'public/backup/'. $user->email .'/incomes.xlsx');
+            // Excel::store(new PengeluaranExport($user->id), 'public/backup/'. $user->email .'/pengeluaran.xlsx');
 
-            // Mail::send('emails.backup', [], function($message) use ($title, $user) {
-            //     $message->to($user->email)->subject($title);
-            //     $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
-            //     $message->attach(storage_path('app/public/backup/'. $user->email .'/incomes.xlsx'));
-            //     $message->attach(storage_path('app/public/backup/'. $user->email .'/pengeluaran.xlsx'));
-            // });
+            Mail::send('emails.backup', [], function($message) use ($title, $user) {
+                $message->to($user->email)->subject($title);
+                $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
+                // $message->attach(storage_path('app/public/backup/'. $user->email .'/incomes.xlsx'));
+                // $message->attach(storage_path('app/public/backup/'. $user->email .'/pengeluaran.xlsx'));
+            });
         }
 
     }
