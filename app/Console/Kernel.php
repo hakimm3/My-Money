@@ -20,6 +20,8 @@ class Kernel extends ConsoleKernel
         ->when(function () {
             return Cron::shouldRun('send:main', 1);
         });
+
+        $schedule->command('send:main')->everyMinute();
     }
 
     /**
