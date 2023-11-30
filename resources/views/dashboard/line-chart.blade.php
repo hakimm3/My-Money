@@ -32,6 +32,15 @@
                     "lineColor": "#31aeef",
                     "lineThickness": 2,
                     "negativeLineColor": "#31aeef",
+                }, {
+                    "balloonText": "Balance Pada [[category]]: [[value]]",
+                    "bullet": "round",
+                    "title": "Balance",
+                    "valueField": "balance",
+                    "fillAlphas": 0,
+                    "lineColor": "#f62d51",
+                    "lineThickness": 2,
+                    "negativeLineColor": "#f62d51",
                 }],
                 "chartCursor": {
                     "cursorAlpha": 0,

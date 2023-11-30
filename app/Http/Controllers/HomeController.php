@@ -93,6 +93,13 @@ class HomeController extends Controller
             return $item;
         });
 
+        // tambahkan balance per bulan dari total pemasukan dan pengeluaran
+        $totalPemasukanPengeluaranPerBulan = $totalPemasukanPengeluaranPerBulan->map(function($item){
+            $item->balance = $item->total - $item->totalPemasukan;
+            return $item;
+        });
+
+
         // pengeluaran dengan kategori makanan pokok selama 1 tahun terakhir
         $averageEat = Pengeluaran::where('user_id', auth()->user()->id)
             ->whereHas('category', function($query){
