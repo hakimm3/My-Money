@@ -95,7 +95,7 @@ class HomeController extends Controller
 
         // tambahkan balance per bulan dari total pemasukan dan pengeluaran
         $totalPemasukanPengeluaranPerBulan = $totalPemasukanPengeluaranPerBulan->map(function($item){
-            $item->balance = $item->total - $item->totalPemasukan;
+            $item->balance = $item->totalPemasukan -  $item->total;
             return $item;
         });
 
