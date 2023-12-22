@@ -3,12 +3,17 @@
 namespace App\Console;
 
 use App\Models\Cron;
+use Google\Service\AndroidManagement\Command;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        Commands\SendMail::class,
+    ];
+
     /**
      * Define the application's command schedule.
      *
