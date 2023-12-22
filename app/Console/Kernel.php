@@ -58,9 +58,16 @@ class Kernel extends ConsoleKernel
         //     $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
         // });
         foreach($users as $user){
-            // if(!is_dir(storage_path('app/public/backup/'. $user->email))){
-            //     mkdir(storage_path('app/public/backup/'. $user->email));
-            // }
+        //   remove old backup
+            if(is_dir(storage_path('app/public/backup/'. $user->email))){
+                $files = glob(storage_path('app/public/backup/'. $user->email .'/*'));
+                foreach($files as $file){
+                    if(is_file($file)){
+                        unlink($file);
+                    }
+                }
+                rmdir(storage_path('app/public/backup/'. $user->email));
+            }
 
             Excel::store(new IncomeExport($user->id), 'public/backup/'. $user->email .'/incomes.xlsx');
             Excel::store(new PengeluaranExport($user->id), 'public/backup/'. $user->email .'/pengeluaran.xlsx');
