@@ -22,12 +22,7 @@ class Kernel extends ConsoleKernel
             return Cron::shouldRun('send:main', 1);
         });
 
-        $schedule->call(function () {
-           Mail::send('emails.backup', [], function($message) {
-                $message->to('hakimpbg@gmail.com')->subject('Backup Data');
-                $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
-           });
-        })->everyMinute();
+        $schedule->command('send:main')->everyMinute();
     }
 
     /**
