@@ -31,10 +31,6 @@ class Kernel extends ConsoleKernel
         ->when(function () {
             return Cron::shouldRun('send:main', 1);
         });
-
-        $schedule->call(function () {
-            $this->backup();
-        })->everyMinute();
     }
 
     /**
@@ -47,37 +43,5 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
-    }
-
-    protected function backup(){
-        $title = "Backup Data";
-
-        $users = \App\Models\User::all();
-        // Mail::send('emails.backup', [], function($message) use ($title, $users) {
-        //     $message->to('hakimpbg@gmail.com')->subject($title);
-        //     $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
-        // });
-        foreach($users as $user){
-        //   remove old backup
-            if(is_dir(storage_path('app/public/backup/'. $user->email))){
-                $files = glob(storage_path('app/public/backup/'. $user->email .'/*'));
-                foreach($files as $file){
-                    if(is_file($file)){
-                        unlink($file);
-                    }
-                }
-                rmdir(storage_path('app/public/backup/'. $user->email));
-            }
-
-            Excel::store(new IncomeExport($user->id), 'public/backup/'. $user->email .'/incomes.xlsx');
-            Excel::store(new PengeluaranExport($user->id), 'public/backup/'. $user->email .'/pengeluaran.xlsx');
-
-            Mail::send('emails.backup', [], function($message) use ($title, $user) {
-                $message->to($user->email)->subject($title);
-                $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
-                $message->attach(storage_path('app/public/backup/'. $user->email .'/incomes.xlsx'));
-                $message->attach(storage_path('app/public/backup/'. $user->email .'/pengeluaran.xlsx'));
-            });
-        }
     }
 }

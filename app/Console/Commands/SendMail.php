@@ -35,8 +35,14 @@ class SendMail extends Command
 
         $users = \App\Models\User::all();
         foreach($users as $user){
-            if(!is_dir(storage_path('app/public/backup/'. $user->email))){
-                mkdir(storage_path('app/public/backup/'. $user->email));
+            if(is_dir(storage_path('app/public/backup/'. $user->email))){
+                $files = glob(storage_path('app/public/backup/'. $user->email .'/*'));
+                foreach($files as $file){
+                    if(is_file($file)){
+                        unlink($file);
+                    }
+                }
+                rmdir(storage_path('app/public/backup/'. $user->email));
             }
 
             Excel::store(new IncomeExport($user->id), 'public/backup/'. $user->email .'/incomes.xlsx');
