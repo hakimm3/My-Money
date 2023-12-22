@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Models\Cron;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -21,7 +22,12 @@ class Kernel extends ConsoleKernel
             return Cron::shouldRun('send:main', 1);
         });
 
-        $schedule->command('send:main')->everyMinute();
+        $schedule->call(function () {
+           Mail::send('emails.backup', [], function($message) {
+                $message->to('hakimpbg@gmail.com')->subject('Backup Data');
+                $message->from(env('MAIL_FROM_ADDRESS'), 'Backup Data');
+           });
+        })->everyMinute();
     }
 
     /**

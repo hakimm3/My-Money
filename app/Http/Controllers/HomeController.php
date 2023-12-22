@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index(Request  $request)
     {   
+
         $totalBulanIni = Pengeluaran::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
         $incomeThisMonth = Income::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
         $balanceThisMonth = $incomeThisMonth - $totalBulanIni;
@@ -66,7 +67,7 @@ class HomeController extends Controller
             ->groupBy('bulan')
             ->get();
         $totalPengeluaranPerBulan = $totalPengeluaranPerBulan->map(function($item){
-            $item->bulan = Date('F', mktime(0, 0, 0, $item->bulan, 10));
+            $item->bulan = Carbon::parse($item->bulan)->format('F Y');
             return $item;
         });
 
