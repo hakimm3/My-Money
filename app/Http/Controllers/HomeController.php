@@ -44,18 +44,22 @@ class HomeController extends Controller
         }
 
         $baseQuery = Pengeluaran::where('user_id', auth()->user()->id)
-        ->filterYear()
         ->when($request->category_id, function($query) use ($request){
             $query->where('category_id', $request->category_id);
         })
         ->when($request->date, function($query) use ($dates){
             $query->whereBetween('date', $dates);
+        })
+        ->when(!$request->date, function($query){
+            $query->whereYear('date', Carbon::now()->year);
         });
 
         $baseQueryPemasukan = Income::where('user_id', auth()->user()->id) 
-        ->filterYear()
         ->when($request->date, function($query) use ($dates){
             $query->whereBetween('date', $dates);
+        })
+        ->when(!$request->date, function($query){
+            $query->whereYear('date', Carbon::now()->year);
         });
 
 

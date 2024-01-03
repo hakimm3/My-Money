@@ -30,12 +30,4 @@ class Pengeluaran extends Model
            return $query->whereMonth('date', Carbon::parse(request()->month)->month);
        }
     }
-
-    public function scopeFilterYear($query)
-    {
-        if(request()->year){
-            // $year = request()->year;
-            return $query->whereYear('date', request()->year);
-        }
-    }
 }
