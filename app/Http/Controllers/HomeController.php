@@ -42,6 +42,7 @@ class HomeController extends Controller
             $dates = explode(' - ', $request->date);
             $dates = [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')];
         }
+
         $baseQuery = Pengeluaran::where('user_id', auth()->user()->id)
         ->filterYear()
         ->when($request->category_id, function($query) use ($request){
@@ -50,6 +51,13 @@ class HomeController extends Controller
         ->when($request->date, function($query) use ($dates){
             $query->whereBetween('date', $dates);
         });
+
+        $baseQueryPemasukan = Income::where('user_id', auth()->user()->id) 
+        ->filterYear()
+        ->when($request->date, function($query) use ($dates){
+            $query->whereBetween('date', $dates);
+        });
+
 
         // total pengeluran grup berdasarkan kategori dan dapatkan nama kategorinya
         $totalPengeluaran = $baseQuery->clone()->selectRaw('category_id, sum(amount) as total')
@@ -62,44 +70,31 @@ class HomeController extends Controller
             return $item->category;
         });
 
-        // total pengeluaran per bulan
-        $totalPengeluaranPerBulan = $baseQuery->clone()->selectRaw('month(date) as bulan, sum(amount) as total')
-            ->groupBy('bulan')
-            ->get();
-        $totalPengeluaranPerBulan = $totalPengeluaranPerBulan->map(function($item){
-            $item->bulan = Carbon::parse($item->bulan)->format('F Y');
-            return $item;
+
+        $totalPengeluaranPerBulan = $baseQuery->clone()->get()->groupBy(function($item){
+            return Carbon::parse($item->date)->format('Y M');
+        })->map(function($item){
+            return $item->sum('amount');
         });
 
-        // total pemasukan per bulan
-        $totalPemasukanPerBulan = Income::where('user_id', auth()->user()->id)
-            ->when($request->year, function($query) use ($request){
-                $query->whereYear('date', $request->year);
-            })
-            ->when($request->date, function($query) use ($dates){
-                $query->whereBetween('date', $dates);
-            })
-            ->selectRaw('month(date) as bulan, sum(amount) as total')
-            ->groupBy('bulan')
-            ->get();
-        $totalPemasukanPerBulan = $totalPemasukanPerBulan->map(function($item){
-            $item->bulan = Date('F', mktime(0, 0, 0, $item->bulan, 10));
-            return $item;
-        });
-
+        $totalPemasukanPerBulan = $baseQueryPemasukan->clone()->get()
+            ->groupBy(function($item){
+                return Carbon::parse($item->date)->format('Y M');
+            })->map(function($item){
+                return $item->sum('amount');
+            });
         
-        // total pemasukan dan pengeluaran per bulan
-        $totalPemasukanPengeluaranPerBulan = $totalPengeluaranPerBulan->map(function($item) use ($totalPemasukanPerBulan){
-            $item->totalPemasukan = $totalPemasukanPerBulan->where('bulan', $item->bulan)->first()->total ?? 0;
-            return $item;
-        });
+        $pemasukanDanPengeluaranPerBulan = [];
+        foreach($totalPemasukanPerBulan as $key => $value){
+            $pemasukanDanPengeluaranPerBulan[] = [
+                'pemasukan' => $value,
+                'pengeluaran' => $totalPengeluaranPerBulan[$key] ?? 0,
+                'balance' => $value - $totalPengeluaranPerBulan[$key] ?? 0,
+                'bulan' => $key
+            ];
+        }
 
-        // tambahkan balance per bulan dari total pemasukan dan pengeluaran
-        $totalPemasukanPengeluaranPerBulan = $totalPemasukanPengeluaranPerBulan->map(function($item){
-            $item->balance = $item->totalPemasukan -  $item->total;
-            return $item;
-        });
-
+        $pemasukanDanPengeluaranPerBulan = collect($pemasukanDanPengeluaranPerBulan)->sortByDesc('bulan')->values();
 
         // pengeluaran dengan kategori makanan pokok selama 1 tahun terakhir
         $averageEat = Pengeluaran::where('user_id', auth()->user()->id)
@@ -126,7 +121,7 @@ class HomeController extends Controller
         $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y H:i:s');
 
         $categories =  Category::get();
-        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'totalPemasukanPengeluaranPerBulan', 'categories', 'nextBackup', 'averageEat', 'averageKebutuhanDasar');
+        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'pemasukanDanPengeluaranPerBulan', 'categories', 'nextBackup', 'averageEat', 'averageKebutuhanDasar');
         return view('home', $compact);
     }
 }

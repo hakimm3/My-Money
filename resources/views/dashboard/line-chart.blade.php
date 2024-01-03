@@ -3,7 +3,7 @@
 @push('scripts')
     <script>
         if ($('#amlinechart4').length) {
-            var data = @json($totalPemasukanPengeluaranPerBulan);
+            var data = @json($pemasukanDanPengeluaranPerBulan);
             console.log(data)
             var chart = AmCharts.makeChart("amlinechart4", {
                 "type": "serial",
@@ -18,7 +18,7 @@
                     "balloonText": "Pemasukan Selama [[category]]: [[value]]",
                     "bullet": "round",
                     "title": "Pemasukan",
-                    "valueField": "totalPemasukan",
+                    "valueField": "pemasukan",
                     "fillAlphas": 0,
                     "lineColor": "#9656e7",
                     "lineThickness": 2,
@@ -27,7 +27,7 @@
                     "balloonText": "Pengeluaran Selama [[category]]: [[value]]",
                     "bullet": "round",
                     "title": "Pengeluaran",
-                    "valueField": "total",
+                    "valueField": "pengeluaran",
                     "fillAlphas": 0,
                     "lineColor": "#31aeef",
                     "lineThickness": 2,

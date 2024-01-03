@@ -29,4 +29,11 @@ class Income extends Model
     {
         return $this->belongsTo(IncomeCategory::class);
     }
+
+    public function scopeFilterYear($query)
+    {
+        if(request('year')){
+            $query->whereYear('date', request('year'));
+        }
+    }
 }
