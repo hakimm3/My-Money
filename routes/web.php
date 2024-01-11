@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->to('login');
-});
+// Route::get('/', function () {
+//     return redirect()->to('login');
+// });
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('redirectToGoogle');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('handleGoogleCallback');
@@ -29,11 +29,11 @@ Route::controller(FacebookController::class)->group(function () {
     Route::get('auth/facebook/callback', 'handleFacebookCallback')->name('handleFacebookCallback');
 });
 
-Auth::routes(['register', false]);
+// Auth::routes(['register', false]);
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('spending', App\Http\Controllers\PengeluaranController::class)->except('show', 'update', 'create');
     Route::post('pengeluaran/import', [App\Http\Controllers\PengeluaranController::class, 'import'])->name('pengeluaran.import');
     Route::get('pengeluaran/export', [App\Http\Controllers\PengeluaranController::class, 'export'])->name('pengeluaran.export');
