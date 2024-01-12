@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PengeluaranRequest;
 use App\Models\Category;
 use App\Models\Pengeluaran;
+use App\Models\Spending;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
@@ -26,34 +25,13 @@ class PengeluaranController extends Controller
 
     public function index(Request $request)
     {
-        $data = Pengeluaran::with('category', 'event')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)
-                ->when($request->dates, function($query) use ($request){
-                    $dates = explode(' - ', $request->dates);
-                    $query->whereBetween('date', [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')]);
-                });
-        if($request->ajax()){
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->editColumn('date', function($row){
-                    return Carbon::parse($row->date)->format('l d F Y');
-                })
-                ->addColumn('category', function($row){
-                    return $row->category->name;
-                })
-                ->addColumn('event', function($row){
-                    return $row->event->name ?? '-';
-                })
-                ->addColumn('amount', function($row){
-                    return 'Rp. '.number_format($row->amount, 0, ',', '.');
-                })
-                ->addColumn('action', 'pengeluaran.action')
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
         $events = \App\Models\Event::all();
         $categories = Category::all();
-        $compact = compact('categories', 'events');
+
+        $spendings = Spending::with('category')->where('user_id', auth()->user()->id)->paginate(10);
+        // dd($spendings);
+
+        $compact = compact('categories', 'events', 'spendings');
         return view('pengeluaran.index', $compact);
     }
 
