@@ -66,7 +66,7 @@
 
         // delete
         let item_id = null
-        $("#deleteProductButton").click(function() {
+        $("#deleteButton").click(function() {
             item_id = $(this).data('id')
         })
 

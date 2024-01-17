@@ -55,16 +55,11 @@
                                 </div>
                             </div>
                         </div>
-                        <button id="createProductButton"
-                            class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                            type="button" data-drawer-target="drawer-create-product-default"
-                            data-drawer-show="drawer-create-product-default"
-                            aria-controls="drawer-create-product-default" data-drawer-placement="right"
-                            >
-                            Add new product
-                        </button>
-                    </div>
 
+                        <x-drawer.button-component id="createProductButton" text="Create" color="primary"
+                            iconClass="fa-solid fa-plus" drawerId="drawer-create-product-default" />
+                            
+                    </div>
                     <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
                         <thead class="bg-gray-100 dark:bg-gray-700">
                             <tr>
