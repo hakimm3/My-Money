@@ -20,8 +20,7 @@ class SpendingTable extends TableComponent
             Column::make('Description')->searchable()->sortable(),
             Column::make('Category', 'category.name')->searchable()->sortable(),
             Column::make('Amount')->searchable()->sortable(),
-            Column::make()->view('pengeluaran.action'),
-            Column::make('id')
+            Column::make()->view('pengeluaran.action')
         ];
     }
 

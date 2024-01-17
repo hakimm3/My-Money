@@ -12,7 +12,8 @@
 @endcan --}}
 
 
-<button type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default"
+<button type="button" id="updateProductButton" onclick="edit('{{ $model->id }}')"
+    data-drawer-target="drawer-update-product-default"
     data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
     data-drawer-placement="right"
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -25,7 +26,9 @@
     </svg>
     Update
 </button>
-<button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-product-default"
+<button type="button" id="deleteProductButton"
+    data-id = "{{ $model->id }}"
+    data-drawer-target="drawer-delete-product-default"
     data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default"
     data-drawer-placement="right"
     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">

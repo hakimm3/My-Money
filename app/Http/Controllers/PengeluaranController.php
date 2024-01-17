@@ -6,6 +6,7 @@ use App\Http\Requests\PengeluaranRequest;
 use App\Models\Category;
 use App\Models\Pengeluaran;
 use App\Models\Spending;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -53,11 +54,8 @@ class PengeluaranController extends Controller
      */
     public function store(PengeluaranRequest $request)
     {
-        $pengeluaran =  Pengeluaran::updateOrCreate(['id' => $request->id], $request->validated());
-        return response()->json([
-            'success' => true,
-            'message' => 'Data berhasil disimpan'
-        ]);
+        Spending::updateOrCreate(['id' => $request->id], $request->validated());
+        return redirect()->back()->with('success', 'Data has been saved!');
     }
 
     /**
@@ -79,13 +77,12 @@ class PengeluaranController extends Controller
      */
     public function edit($id)
     {
-        $pengeluaran = Pengeluaran::with('category')->find($id);
+        $pengeluaran = Spending::with('category')->find($id);
         return response()->json([
             'success' => true,
             'data' => $pengeluaran
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -106,7 +103,7 @@ class PengeluaranController extends Controller
      */
     public function destroy($id)
     {
-        Pengeluaran::find($id)->delete();
+        Spending::find($id)->delete();
         return response()->json([
             'success' => true,
             'message' => 'Data berhasil dihapus'
