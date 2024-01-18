@@ -20,7 +20,7 @@ class IncomeSeeder extends Seeder
         $faker = \Faker\Factory::create('id_ID');
         for($i = 0; $i < 10; $i++) {
             \App\Models\Income::create([
-                'user_id' => User::where('email', 'admin@duit.id')->first()->id,
+                'user_id' => User::where('email', 'tidursapu@gmail.com')->first()->id,
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(100000, 1000000),
                 'description' => $faker->sentence,
