@@ -7,7 +7,7 @@
 <meta name="author" content="Themesberg">
 <meta name="generator" content="Hugo 0.111.3">
 
-<title>Tailwind CSS Sign in/Login Page - Flowbite</title>
+<title>{{ env('APP_NAME') }}</title>
 
 <link rel="canonical" href="https://flowbite-admin-dashboard.vercel.app/authentication/sign-in/">
 
