@@ -9,12 +9,10 @@
                 
                 <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
                     <ul class="flex flex-col mt-4 space-x-6 text-sm font-medium lg:flex-row xl:space-x-8 lg:mt-0">
-                        <li>
-                            <a href="{{ route('home') }}" class="block rounded text-primary-700 dark:text-primary-500" aria-current="page">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('spending.index') }}" class="block text-gray-700 hover:text-primary-700 dark:text-gray-400 dark:hover:text-white">Spending</a>
-                        </li>
+
+                        <x-navbar.item-component route="{{ route('home') }}" text="Home" :isActive='true'/>
+                        <x-navbar.item-component route="{{ route('spending.index') }}" text="Spending" :isActive='false'/>
+
                         <li>
                             <a href="{{ route('income.index') }}" class="block text-gray-700 hover:text-primary-700 dark:text-gray-400 dark:hover:text-white">Income</a>
                         </li>

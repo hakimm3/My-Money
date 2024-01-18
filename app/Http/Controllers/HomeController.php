@@ -89,14 +89,14 @@ class HomeController extends Controller
             });
         
         $pemasukanDanSpendingPerBulan = [];
-        foreach($totalPemasukanPerBulan as $key => $value){
-            $pemasukanDanSpendingPerBulan[] = [
-                'pemasukan' => $value,
-                'Spending' => $totalSpendingPerBulan[$key] ?? 0,
-                'balance' => $value - $totalSpendingPerBulan[$key] ?? 0,
-                'bulan' => $key
-            ];
-        }
+        // foreach($totalPemasukanPerBulan as $key => $value){
+        //     $pemasukanDanSpendingPerBulan[] = [
+        //         'pemasukan' => $value,
+        //         'Spending' => $totalSpendingPerBulan[$key] ?? 0,
+        //         'balance' => $value - $totalSpendingPerBulan[$key] ?? 0,
+        //         'bulan' => $key
+        //     ];
+        // }
 
         $pemasukanDanSpendingPerBulan = collect($pemasukanDanSpendingPerBulan)->sortByDesc('bulan')->values();
 
