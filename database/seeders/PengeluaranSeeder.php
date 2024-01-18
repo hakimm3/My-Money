@@ -19,7 +19,7 @@ class PengeluaranSeeder extends Seeder
         $categories = \App\Models\Category::get();
 
         for ($i = 0; $i < 100; $i++) {
-            \App\Models\Pengeluaran::create([
+            \App\Models\Spending::create([
                 'user_id' => \App\Models\User::where('email', 'admin@duit.id')->first()->id,
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(10000, 100000),
