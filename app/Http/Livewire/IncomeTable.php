@@ -10,15 +10,20 @@ class IncomeTable extends TableComponent
 {
     public function query()
     {
-        return Income::query();
+        return \App\Models\Income::with('category');
     }
 
     public function columns()
     {
         return [
-            Column::make('ID')->searchable()->sortable(),
-            Column::make('Created At')->searchable()->sortable(),
-            Column::make('Updated At')->searchable()->sortable(),
+            Column::make('Date')->sortable()->searchable(),
+            Column::make('Description')->sortable()->searchable(),
+            Column::make('Category', 'category.name')->sortable()->searchable(),
+            Column::make('Amount')->sortable()->searchable(),
+            Column::make()->view('pemasukan.action')
         ];
     }
+
+    public $checkbox_side = 'left';
+    public $paginationTheme = 'custom-pagination';
 }

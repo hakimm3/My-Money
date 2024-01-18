@@ -14,34 +14,16 @@ use Yajra\DataTables\Facades\DataTables;
 
 class IncomeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $data = Income::with('category')->where('user_id', auth()->user()->id)->orderBy('date', 'desc')->get();
-        if($request->ajax()){
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->editColumn('date', function($row){
-                    return Carbon::parse($row->date)->format('l d F Y');
-                })
-                ->addColumn('category', function($row){
-                    return $row->category->name;
-                })
-                ->addColumn('amount', function($row){
-                    return 'Rp. '.number_format($row->amount, 0, ',', '.');
-                })
-                ->addColumn('action', 'pemasukan.action')
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
         $categories = \App\Models\IncomeCategory::all();
 
         return view('pemasukan.index', compact('categories'));
     }
 
     public function store(IncomeRequest $request){
-        $income = Income::updateOrCreate(['id' => $request->id], $request->validated());
-        return response(200);
+        Income::updateOrCreate(['id' => $request->id], $request->validated());
+        return redirect()->back()->with('success', 'Data has been saved!');
     }
 
     public function edit($id){
