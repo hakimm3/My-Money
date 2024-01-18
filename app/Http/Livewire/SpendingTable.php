@@ -10,7 +10,7 @@ class SpendingTable extends TableComponent
 {
     public function query()
     {
-        return Spending::with('category');
+        return Spending::with('category')->whereUserId(auth()->user()->id);
     }
 
     public function columns()

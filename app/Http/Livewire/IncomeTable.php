@@ -10,7 +10,7 @@ class IncomeTable extends TableComponent
 {
     public function query()
     {
-        return \App\Models\Income::with('category');
+        return \App\Models\Income::with('category')->whereUserId(auth()->user()->id);
     }
 
     public function columns()
