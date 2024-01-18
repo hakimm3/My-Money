@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Pengeluaran;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Illuminate\Support\Str;
@@ -22,7 +21,7 @@ class PengeluaranExport implements FromCollection, WithHeadings, ShouldAutoSize
 
     public function collection()
     {
-        $pengeluaran = Pengeluaran::with('category')->where('user_id', $this->user_id)->latest()->get();
+        $pengeluaran = \App\Models\Spending::with('category')->where('user_id', $this->user_id)->latest()->get();
         $xport = [];
         foreach ($pengeluaran as $key => $value) {
             $xport[] = [
