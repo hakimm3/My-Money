@@ -7,11 +7,13 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "kdion4891/laravel-livewire-tables": "^1.6",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
+        "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1",
         "psr/simple-cache": "^1.0",
         "spatie/laravel-permission": "^5.9",

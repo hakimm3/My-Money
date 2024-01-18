@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
-class Pengeluaran extends Model
+class Spending extends Model
 {
     use HasFactory, HasUuids;
     protected $table = 'pengeluarans';

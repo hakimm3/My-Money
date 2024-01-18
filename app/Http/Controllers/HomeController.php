@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Cron;
 use Illuminate\Http\Request;
-use App\Models\Pengeluaran;
+use App\Models\Spending;
 use App\Models\Income;
 use Carbon\Carbon;
 
@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function index(Request  $request)
     {   
 
-        $totalBulanIni = Pengeluaran::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
+        $totalBulanIni = Spending::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
         $incomeThisMonth = Income::where('user_id', auth()->user()->id)->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
         $balanceThisMonth = $incomeThisMonth - $totalBulanIni;
         
@@ -43,7 +43,7 @@ class HomeController extends Controller
             $dates = [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')];
         }
 
-        $baseQuery = Pengeluaran::where('user_id', auth()->user()->id)
+        $baseQuery = Spending::where('user_id', auth()->user()->id)
         ->when($request->category_id, function($query) use ($request){
             $query->where('category_id', $request->category_id);
         })
@@ -64,18 +64,18 @@ class HomeController extends Controller
 
 
         // total pengeluran grup berdasarkan kategori dan dapatkan nama kategorinya
-        $totalPengeluaran = $baseQuery->clone()->selectRaw('category_id, sum(amount) as total')
+        $totalSpending = $baseQuery->clone()->selectRaw('category_id, sum(amount) as total')
             ->groupBy('category_id')
             ->with('category')
             ->get();
-        // get total pengeluaran dan nama kategorinya
-        $totalPengeluaran = $totalPengeluaran->map(function($item){
+        // get total Spending dan nama kategorinya
+        $totalSpending = $totalSpending->map(function($item){
             $item->category->total = $item->total;
             return $item->category;
         });
 
 
-        $totalPengeluaranPerBulan = $baseQuery->clone()->get()->groupBy(function($item){
+        $totalSpendingPerBulan = $baseQuery->clone()->get()->groupBy(function($item){
             return Carbon::parse($item->date)->format('Y M');
         })->map(function($item){
             return $item->sum('amount');
@@ -88,20 +88,20 @@ class HomeController extends Controller
                 return $item->sum('amount');
             });
         
-        $pemasukanDanPengeluaranPerBulan = [];
-        foreach($totalPemasukanPerBulan as $key => $value){
-            $pemasukanDanPengeluaranPerBulan[] = [
-                'pemasukan' => $value,
-                'pengeluaran' => $totalPengeluaranPerBulan[$key] ?? 0,
-                'balance' => $value - $totalPengeluaranPerBulan[$key] ?? 0,
-                'bulan' => $key
-            ];
-        }
+        $pemasukanDanSpendingPerBulan = [];
+        // foreach($totalPemasukanPerBulan as $key => $value){
+        //     $pemasukanDanSpendingPerBulan[] = [
+        //         'pemasukan' => $value,
+        //         'Spending' => $totalSpendingPerBulan[$key] ?? 0,
+        //         'balance' => $value - $totalSpendingPerBulan[$key] ?? 0,
+        //         'bulan' => $key
+        //     ];
+        // }
 
-        $pemasukanDanPengeluaranPerBulan = collect($pemasukanDanPengeluaranPerBulan)->sortByDesc('bulan')->values();
+        $pemasukanDanSpendingPerBulan = collect($pemasukanDanSpendingPerBulan)->sortByDesc('bulan')->values();
 
-        // pengeluaran dengan kategori makanan pokok selama 1 tahun terakhir
-        $averageEat = Pengeluaran::where('user_id', auth()->user()->id)
+        // Spending dengan kategori makanan pokok selama 1 tahun terakhir
+        $averageEat = Spending::where('user_id', auth()->user()->id)
             ->whereHas('category', function($query){
                 $query->where('name', 'Makanan Pokok');
             })
@@ -111,7 +111,7 @@ class HomeController extends Controller
             ->get()
             ->average('total');
 
-        $averageKebutuhanDasar = Pengeluaran::where('user_id', auth()->user()->id)
+        $averageKebutuhanDasar = Spending::where('user_id', auth()->user()->id)
             ->whereHas('category', function($query){
                 $query->where('name', 'Kebutuhan Dasar');
             })
@@ -125,7 +125,7 @@ class HomeController extends Controller
         $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y H:i:s');
 
         $categories =  Category::get();
-        $compact = compact('totalBulanIni', 'totalPengeluaran', 'totalPengeluaranPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'pemasukanDanPengeluaranPerBulan', 'categories', 'nextBackup', 'averageEat', 'averageKebutuhanDasar');
+        $compact = compact('totalBulanIni', 'totalSpending', 'totalSpendingPerBulan', 'incomeThisMonth', 'balanceThisMonth', 'pemasukanDanSpendingPerBulan', 'categories', 'nextBackup', 'averageEat', 'averageKebutuhanDasar');
         return view('home', $compact);
     }
 }

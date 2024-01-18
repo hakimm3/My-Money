@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PengeluaranRequest;
 use App\Models\Category;
 use App\Models\Pengeluaran;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use App\Models\Spending;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PengeluaranController extends Controller
@@ -26,34 +26,13 @@ class PengeluaranController extends Controller
 
     public function index(Request $request)
     {
-        $data = Pengeluaran::with('category', 'event')->orderBy('date', 'desc')->where('user_id', auth()->user()->id)
-                ->when($request->dates, function($query) use ($request){
-                    $dates = explode(' - ', $request->dates);
-                    $query->whereBetween('date', [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')]);
-                });
-        if($request->ajax()){
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->editColumn('date', function($row){
-                    return Carbon::parse($row->date)->format('l d F Y');
-                })
-                ->addColumn('category', function($row){
-                    return $row->category->name;
-                })
-                ->addColumn('event', function($row){
-                    return $row->event->name ?? '-';
-                })
-                ->addColumn('amount', function($row){
-                    return 'Rp. '.number_format($row->amount, 0, ',', '.');
-                })
-                ->addColumn('action', 'pengeluaran.action')
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
         $events = \App\Models\Event::all();
         $categories = Category::all();
-        $compact = compact('categories', 'events');
+
+        $spendings = Spending::with('category')->where('user_id', auth()->user()->id)->paginate(10);
+        // dd($spendings);
+
+        $compact = compact('categories', 'events', 'spendings');
         return view('pengeluaran.index', $compact);
     }
 
@@ -75,11 +54,8 @@ class PengeluaranController extends Controller
      */
     public function store(PengeluaranRequest $request)
     {
-        $pengeluaran =  Pengeluaran::updateOrCreate(['id' => $request->id], $request->validated());
-        return response()->json([
-            'success' => true,
-            'message' => 'Data berhasil disimpan'
-        ]);
+        Spending::updateOrCreate(['id' => $request->id], $request->validated());
+        return redirect()->back()->with('success', 'Data has been saved!');
     }
 
     /**
@@ -101,13 +77,12 @@ class PengeluaranController extends Controller
      */
     public function edit($id)
     {
-        $pengeluaran = Pengeluaran::with('category')->find($id);
+        $pengeluaran = Spending::with('category')->find($id);
         return response()->json([
             'success' => true,
             'data' => $pengeluaran
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -128,7 +103,7 @@ class PengeluaranController extends Controller
      */
     public function destroy($id)
     {
-        Pengeluaran::find($id)->delete();
+        Spending::find($id)->delete();
         return response()->json([
             'success' => true,
             'message' => 'Data berhasil dihapus'

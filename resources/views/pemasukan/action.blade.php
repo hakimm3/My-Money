@@ -1,13 +1,24 @@
 @can('update-pemasukan')
-    <button class="btn btn-outline-primary btn-sm mr-2" onclick="edit('{{ $id }}')" data-toggle="tooltip"
-        data-placement="top" title="Edit">
-        <i class="ti-pencil"></i>
-    </button>
+    <x-drawer.button-component
+        id="updateProductButton"
+        drawerId="drawer-update"
+        iconClass="fa-regular fa-pen-to-square" 
+        text="Update" 
+        color="primary">
+        <x-slot name="additionalAttributes">
+            onclick="edit('{{ $model->id }}')"
+        </x-slot>
+    </x-drawer.button-component>
 @endcan
-
 @can('delete-pemasukan')
-    <button class="btn btn-outline-danger btn-sm" onclick="destroy('{{ $id }}')" data-toggle="tooltip"
-        data-placement="top" title="Delete">
-        <i class="ti-trash"></i>
-    </button>
+    <x-drawer.button-component
+     id="deleteButton"
+     drawerId="drawer-delete"
+     iconClass="fa-solid fa-trash" 
+     text="Delete" 
+     color="red">
+        <x-slot name="additionalAttributes">
+            data-id = "{{ $model->id }}"
+        </x-slot>
+    </x-drawer.button-component>
 @endcan
