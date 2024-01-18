@@ -1,7 +1,7 @@
 @can('update-pengeluaran')
     <x-drawer.button-component
         id="updateProductButton"
-        drawerId="drawer-update-product-default"
+        drawerId="drawer-update"
         iconClass="fa-regular fa-pen-to-square" 
         text="Update" 
         color="primary">
@@ -13,7 +13,7 @@
 @can('delete-pengeluaran')
     <x-drawer.button-component
      id="deleteButton"
-     drawerId="drawer-delete-product-default"
+     drawerId="drawer-delete"
      iconClass="fa-solid fa-trash" 
      text="Delete" 
      color="red">

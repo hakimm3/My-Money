@@ -57,7 +57,7 @@
                         </div>
 
                         <x-drawer.button-component id="createProductButton" text="Create" color="primary"
-                            iconClass="fa-solid fa-plus" drawerId="drawer-create-product-default" />
+                            iconClass="fa-solid fa-plus" drawerId="drawer-create" />
                             
                     </div>
                     <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
