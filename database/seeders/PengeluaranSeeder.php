@@ -20,7 +20,7 @@ class PengeluaranSeeder extends Seeder
 
         for ($i = 0; $i < 100; $i++) {
             \App\Models\Pengeluaran::create([
-                'user_id' => $user->random()->id,
+                'user_id' => \App\Models\User::where('email', 'admin@duit.id')->first()->id,
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(10000, 100000),
                 'date' => $faker->dateTimeBetween('-1 years', 'now'),

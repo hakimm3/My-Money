@@ -16,12 +16,11 @@ class IncomeSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::get();
         $categories = IncomeCategory::get();
         $faker = \Faker\Factory::create('id_ID');
         for($i = 0; $i < 10; $i++) {
             $income = \App\Models\Income::create([
-                'user_id' => $user->random()->id,
+                'user_id' => User::where('email', 'admin@duit.id')->first()->id,
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(100000, 1000000),
                 'description' => $faker->sentence,
