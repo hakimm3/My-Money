@@ -15,7 +15,6 @@ class PengeluaranSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create('id_ID');
-        $user = \App\Models\User::get();
         $categories = \App\Models\Category::get();
 
         for ($i = 0; $i < 100; $i++) {

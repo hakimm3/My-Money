@@ -34,6 +34,7 @@ class SendMail extends Command
         $title = "Backup Data";
 
         $users = \App\Models\User::all();
+        dd(env('MAIL_PASSWORD'));
         foreach($users as $user){
             if(is_dir(storage_path('app/public/backup/'. $user->email))){
                 $files = glob(storage_path('app/public/backup/'. $user->email .'/*'));
