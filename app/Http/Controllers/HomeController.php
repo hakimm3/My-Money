@@ -71,8 +71,8 @@ class HomeController extends Controller
         // End Main Widget
 
         // Tabs Widget by Category and month
-        $incomes = $baseQueryIncome->clone()->with('category')->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('category_id')->selectRaw('sum(amount) as amount, category_id')->limit(5)->get();
-        $spendings = $baseQuerySpending->clone()->with('category')->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('category_id')->selectRaw('sum(amount) as amount, category_id')->limit(5)->get();
+        $incomes = $baseQueryIncome->clone()->with('category')->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('category_id')->selectRaw('sum(amount) as amount, category_id')->orderByDesc('amount')->limit(5)->get();
+        $spendings = $baseQuerySpending->clone()->with('category')->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('category_id')->selectRaw('sum(amount) as amount, category_id')->orderByDesc('amount')->limit(5)->get();
         
         $tabsWidgetData = [];
         $tabsWidgetData['incomes'] = $incomes;
