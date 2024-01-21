@@ -17,7 +17,7 @@ class PengeluaranSeeder extends Seeder
         $faker = \Faker\Factory::create('id_ID');
         $categories = \App\Models\Category::get();
 
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             \App\Models\Spending::create([
                 'user_id' => \App\Models\User::where('email', 'tidursapu@gmail.com')->first()->id,
                 'category_id' => $categories->random()->id,

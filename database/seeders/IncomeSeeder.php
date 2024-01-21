@@ -18,7 +18,9 @@ class IncomeSeeder extends Seeder
     {
         $categories = IncomeCategory::get();
         $faker = \Faker\Factory::create('id_ID');
-        for($i = 0; $i < 10; $i++) {
+
+
+        for($i = 0; $i < 1000; $i++) {
             \App\Models\Income::create([
                 'user_id' => User::where('email', 'tidursapu@gmail.com')->first()->id,
                 'category_id' => $categories->random()->id,

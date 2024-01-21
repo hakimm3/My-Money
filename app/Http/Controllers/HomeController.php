@@ -32,39 +32,45 @@ class HomeController extends Controller
         $baseQuerySpending = Spending::where('user_id', auth()->user()->id);
         $baseQueryIncome = Income::where('user_id', auth()->user()->id);
 
-        $spendingThisMonth = $baseQuerySpending->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
-        $incomeThisMonth = $baseQueryIncome->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
+        $spendingThisMonth = $baseQuerySpending->clone()->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
+        $incomeThisMonth = $baseQueryIncome->clone()->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->sum('amount');
 
-        $spendingLastMonth = $baseQuerySpending->whereMonth('date', Carbon::now()->subMonth()->month)->whereYear('date', Carbon::now()->subMonth()->year)->sum('amount');
-        $incomeLastMonth = $baseQueryIncome->whereMonth('date', Carbon::now()->subMonth()->month)->whereYear('date', Carbon::now()->subMonth()->year)->sum('amount');
+        $spendingLastMonth = $baseQuerySpending->clone()->whereMonth('date', Carbon::now()->subMonth()->month)->whereYear('date', Carbon::now()->subMonth()->year)->sum('amount');
+        $incomeLastMonth = $baseQueryIncome->clone()->whereMonth('date', Carbon::now()->subMonth()->month)->whereYear('date', Carbon::now()->subMonth()->year)->sum('amount');
 
         // percentage spending this month and last month 
         $percentageSpending = 0;
         if($spendingLastMonth > 0){
-            $percentageSpending = ($spendingThisMonth - $spendingLastMonth) / $spendingLastMonth * 100;
+            $percentageSpending = floor(($spendingThisMonth - $spendingLastMonth) / $spendingLastMonth * 100);
         }
 
         // percentage income this month and last month
         $percentageIncome = 0;
         if($incomeLastMonth > 0){
-            $percentageIncome = ($incomeThisMonth - $incomeLastMonth) / $incomeLastMonth * 100;
+            $percentageIncome = floor(($incomeThisMonth - $incomeLastMonth) / $incomeLastMonth * 100);
         }
         
         $spendingThisMonth = 'Rp. '.number_format($spendingThisMonth, 0, ',', '.');
         $incomeThisMonth = 'Rp. '.number_format($incomeThisMonth, 0, ',', '.');
 
-        $dates = [];
-        if($request->date){
-            $dates = explode(' - ', $request->date);
-            $dates = [Carbon::parse($dates[0])->format('Y-m-d'), Carbon::parse($dates[1])->format('Y-m-d')];
-        }
+        
 
+        // Main Widget 
+        $spendings = $baseQuerySpending->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
+        $incomes = $baseQueryIncome->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
+
+        $mainWidgetData = [];
+        $mainWidgetData['spending'] = $spendings->pluck('amount')->toArray();
+        $mainWidgetData['income'] = $incomes->pluck('amount')->toArray();
+        $mainWidgetData['dates'] = $spendings->pluck('date')->map(function($date){
+            return Carbon::parse($date)->format('d M');
+        });
        
         // nex backup
         $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y');
 
         $categories =  Category::get();
-        $compact = compact('spendingThisMonth', 'incomeThisMonth', 'categories', 'nextBackup', 'percentageSpending', 'percentageIncome');
+        $compact = compact('spendingThisMonth', 'incomeThisMonth', 'categories', 'nextBackup', 'percentageSpending', 'percentageIncome', 'mainWidgetData');
         return view('home', $compact);
     }
 }

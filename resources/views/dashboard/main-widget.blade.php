@@ -147,12 +147,12 @@
             series: [
                 {
                     name: 'Income',
-                    data: [6356, 6218, 6156, 6526, 6356, 6256, 6056],
+                    data: @json($mainWidgetData['income']),
                     color: '#1A56DB'
                 },
                 {
                     name: 'Expenses',
-                    data: [6556, 6725, 6424, 6356, 6586, 6756, 6616],
+                    data: @json($mainWidgetData['spending']),
                     color: '#FDBA8C'
                 }
             ],
@@ -165,7 +165,7 @@
                 }
             },
             xaxis: {
-                categories: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb'],
+                categories: @json($mainWidgetData['dates']),
                 labels: {
                     style: {
                         colors: [mainChartColors.labelColor],
@@ -197,7 +197,7 @@
                         fontWeight: 500,
                     },
                     formatter: function (value) {
-                        return '$' + value;
+                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
                 },
             },
