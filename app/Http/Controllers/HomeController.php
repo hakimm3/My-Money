@@ -56,8 +56,8 @@ class HomeController extends Controller
         
 
         // Main Widget 
-        $spendings = $baseQuerySpending->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
-        $incomes = $baseQueryIncome->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
+        $spendings = $baseQuerySpending->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date')->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
+        $incomes = $baseQueryIncome->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date')->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
 
         $mainWidgetData = [];
         $mainWidgetData['spending'] = $spendings->pluck('amount')->toArray();
@@ -65,12 +65,25 @@ class HomeController extends Controller
         $mainWidgetData['dates'] = $spendings->pluck('date')->map(function($date){
             return Carbon::parse($date)->format('d M');
         });
-       
+
+        // total spending
+        $mainWidgetData['totalSpending'] = 'Rp. '.number_format($spendings->sum('amount'), 0, ',', '.');
+        // End Main Widget
+
+        // Tabs Widget by Category and month
+        $incomes = $baseQueryIncome->clone()->with('category')->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('category_id')->selectRaw('sum(amount) as amount, category_id')->limit(5)->get();
+        $spendings = $baseQuerySpending->clone()->with('category')->whereMonth('date', Carbon::now()->month)->whereYear('date', Carbon::now()->year)->groupBy('category_id')->selectRaw('sum(amount) as amount, category_id')->limit(5)->get();
+        
+        $tabsWidgetData = [];
+        $tabsWidgetData['incomes'] = $incomes;
+        $tabsWidgetData['spendings'] = $spendings;
+        // End Tabs Widget by Category and month
+
         // nex backup
         $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y');
 
         $categories =  Category::get();
-        $compact = compact('spendingThisMonth', 'incomeThisMonth', 'categories', 'nextBackup', 'percentageSpending', 'percentageIncome', 'mainWidgetData');
+        $compact = compact('spendingThisMonth', 'incomeThisMonth', 'categories', 'nextBackup', 'percentageSpending', 'percentageIncome', 'mainWidgetData', 'tabsWidgetData');
         return view('home', $compact);
     }
 }

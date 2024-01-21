@@ -55,237 +55,68 @@
     <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
         <div class="hidden pt-4" id="faq" role="tabpanel" aria-labelledby="faq-tab">
             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Makanan Pokok
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
+                @foreach ($tabsWidgetData['spendings'] as $item)
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center min-w-0">
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-900 truncate dark:text-white">
+                                        {{ $item->category->name }}
+                                    </p>
+                                    <div
+                                        class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                                        <svg class="w-4 h-4" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true">
+                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
+                                            </path>
+                                        </svg>
+                                        2.5%
+                                        <span class="ml-2 text-gray-500">vs last month</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Makanan Jajan
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
-                                </div>
+                            <div
+                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                Rp. {{ number_format($item->amount, 0, ',', '.') }}
                             </div>
                         </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                   Transportasi
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Kebutuhan Dasar
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Hiburan
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                
-
+                    </li>
+                @endforeach
             </ul>
         </div>
         <div class="hidden pt-4" id="about" role="tabpanel" aria-labelledby="about-tab">
             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-               
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Gaji
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
+                @foreach ($tabsWidgetData['incomes'] as $item)
+                    <li class="py-3 sm:py-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center min-w-0">
+                                <div class="ml-3">
+                                    <p class="font-medium text-gray-900 truncate dark:text-white">
+                                        {{ $item->category->name }}
+                                    </p>
+                                    <div
+                                        class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
+                                        <svg class="w-4 h-4" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true">
+                                            <path clip-rule="evenodd" fill-rule="evenodd"
+                                                d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
+                                            </path>
+                                        </svg>
+                                        2.5%
+                                        <span class="ml-2 text-gray-500">vs last month</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Bonus
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
-                                </div>
+                            <div
+                                class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                Rp. {{ number_format($item->amount, 0, ',', '.') }}
                             </div>
                         </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center min-w-0">
-                            <div class="ml-3">
-                                <p class="font-medium text-gray-900 truncate dark:text-white">
-                                    Tradding Saham
-                                </p>
-                                <div
-                                    class="flex items-center justify-end flex-1 text-sm text-green-500 dark:text-green-400">
-                                    <svg class="w-4 h-4" fill="currentColor"
-                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
-                                        aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd"
-                                            d="M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z">
-                                        </path>
-                                    </svg>
-                                    2.5%
-                                    <span class="ml-2 text-gray-500">vs last month</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            $445,467
-                        </div>
-                    </div>
-                </li>
-
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>
