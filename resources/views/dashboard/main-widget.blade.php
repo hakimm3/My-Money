@@ -187,7 +187,11 @@
                         fontWeight: 500,
                     },
                     formatter: function (value) {
-                        return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        if(value != undefined){
+                            return 'Rp. ' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            return value;
+                        }
                     }
                 },
             },

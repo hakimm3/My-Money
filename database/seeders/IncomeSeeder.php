@@ -19,6 +19,7 @@ class IncomeSeeder extends Seeder
         $categories = IncomeCategory::get();
         $faker = \Faker\Factory::create('id_ID');
 
+        \App\Models\Income::where('user_id', User::where('email', 'tidursapu@gmail.com')->first()->id)->delete();
 
         for($i = 0; $i < 1000; $i++) {
             \App\Models\Income::create([
@@ -26,7 +27,7 @@ class IncomeSeeder extends Seeder
                 'category_id' => $categories->random()->id,
                 'amount' => $faker->numberBetween(100000, 1000000),
                 'description' => $faker->sentence,
-                'date' => $faker->dateTimeBetween('-1 years', 'now')
+                'date' => $faker->dateTimeBetween('-1 month', '+1 years')
             ]);
         }
     }

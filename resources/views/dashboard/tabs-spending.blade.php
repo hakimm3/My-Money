@@ -22,26 +22,22 @@
 
 @push('js')
     <script>
+        // let data = @json($tabsSpendingIncome['incomes']);
+        // // data = data.map((item) => {
+        // //     return {
+        // //         x: item.month,
+        // //         y: item.amount
+        // //     }
+        // // })
+        // console.log(data);
+
         const options = {
             colors: ['#1A56DB', '#FDBA8C'],
             series: [
                 {
                     name: 'Spending',
                     color: '#1A56DB',
-                    data: [
-                        { x: 'January', y: 170 },
-                        { x: 'February', y: 180 },
-                        { x: 'March', y: 164 },
-                        { x: 'April', y: 145 },
-                        { x: 'May', y: 194 },
-                        { x: 'June', y: 170 },
-                        { x: 'July', y: 155 },
-                        { x: 'August', y: 180 },
-                        { x: 'September', y: 170 },
-                        { x: 'October', y: 180 },
-                        { x: 'November', y: 164 },
-                        { x: 'December', y: 145 }
-                    ]
+                    data: @json($tabsSpendingIncome['spendings'])
                 }
             ],
             chart: {

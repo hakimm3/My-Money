@@ -79,11 +79,29 @@ class HomeController extends Controller
         $tabsWidgetData['spendings'] = $spendings;
         // End Tabs Widget by Category and month
 
+        // Tabs Spending and Income
+        $spendings = $baseQuerySpending->clone()->whereYear('date', Carbon::now()->year)->selectRaw('sum(amount) as amount, month(date) as month')->groupBy('month')->orderBy('month')->get()
+        ->map(function($item){
+            $item->x = Carbon::parse($item->month. '/' .Carbon::now()->format('y'))->format('M');
+            $item->y = number_format($item->amount, 0, ',', '.');
+            return $item;
+        });
+        $incomes = $baseQueryIncome->clone()->whereYear('date', Carbon::now()->year)->selectRaw('sum(amount) as amount, month(date) as month')->groupBy('month')->orderBy('month')->get()
+            ->map(function($item){
+               $item->x = Carbon::parse($item->month. '/' .Carbon::now()->format('y'))->format('M');
+                $item->y = number_format($item->amount, 0, ',', '.');
+                return $item;
+            });
+        
+        $tabsSpendingIncome = [];
+        $tabsSpendingIncome['spendings'] = $spendings;
+        $tabsSpendingIncome['incomes'] = $incomes;
+
         // nex backup
         $nextBackup = Carbon::parse(Cron::where('command', 'send:main')->first()->next_run)->timezone('Asia/Jakarta')->format('d F Y');
 
         $categories =  Category::get();
-        $compact = compact('spendingThisMonth', 'incomeThisMonth', 'categories', 'nextBackup', 'percentageSpending', 'percentageIncome', 'mainWidgetData', 'tabsWidgetData');
+        $compact = compact('spendingThisMonth', 'incomeThisMonth', 'categories', 'nextBackup', 'percentageSpending', 'percentageIncome', 'mainWidgetData', 'tabsWidgetData', 'tabsSpendingIncome');
         return view('home', $compact);
     }
 }
