@@ -85,6 +85,11 @@
                 style: {
                     fontSize: '14px',
                     fontFamily: 'Inter, sans-serif'
+                },
+                y: {
+                    formatter: function (val) {
+                        return val.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&.');
+                    }
                 }
             },
             states: {

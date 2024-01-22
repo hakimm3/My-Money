@@ -83,13 +83,13 @@ class HomeController extends Controller
         $spendings = $baseQuerySpending->clone()->whereYear('date', Carbon::now()->year)->selectRaw('sum(amount) as amount, month(date) as month')->groupBy('month')->orderBy('month')->get()
         ->map(function($item){
             $item->x = Carbon::parse($item->month. '/' .Carbon::now()->format('y'))->format('M');
-            $item->y = number_format($item->amount, 0, ',', '.');
+            $item->y = $item->amount;
             return $item;
         });
         $incomes = $baseQueryIncome->clone()->whereYear('date', Carbon::now()->year)->selectRaw('sum(amount) as amount, month(date) as month')->groupBy('month')->orderBy('month')->get()
             ->map(function($item){
                $item->x = Carbon::parse($item->month. '/' .Carbon::now()->format('y'))->format('M');
-                $item->y = number_format($item->amount, 0, ',', '.');
+                $item->y = $item->amount;
                 return $item;
             });
         
