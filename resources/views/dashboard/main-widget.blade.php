@@ -14,7 +14,7 @@
         <div>
             <button
                 class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 rounded-lg hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                type="button" data-dropdown-toggle="weekly-sales-dropdown">Last 7 days <svg
+                type="button" data-dropdown-toggle="weekly-sales-dropdown">Last {{ request()->mainWidgetPeriods ? \Carbon\Carbon::parse(request()->mainWidgetPeriods[0])->diffInDays(\Carbon\Carbon::parse(request()->mainWidgetPeriods[1])) : 7}} days <svg
                     class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -26,34 +26,26 @@
                 <div class="px-4 py-3" role="none">
                     <p class="text-sm font-medium text-gray-900 truncate dark:text-white"
                         role="none">
-                        Sep 16, 2021 - Sep 22, 2021
+                        {{ request()->mainWidgetPeriods ?  \Carbon\Carbon::parse(request()->mainWidgetPeriods[0])->format('M d, Y') : \Carbon\Carbon::now()->subDays(7)->format('M d, Y') }} 
+                        - 
+                        {{ request()->mainWidgetPeriods ? \Carbon\Carbon::parse(request()->mainWidgetPeriods[1])->format('M d, Y') : \Carbon\Carbon::now()->format('M d, Y') }}
                     </p>
                 </div>
                 <ul class="py-1" role="none">
                     <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                            role="menuitem">Yesterday</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                            role="menuitem">Today</a>
-                    </li>
-                    <li>
-                        <a href="#"
+                        <a href="{!! route('home', ['mainWidgetPeriods' => [\Carbon\Carbon::now()->subDays(7)->format('Y-m-d'), \Carbon\Carbon::now()->format('Y/m/d')]]) !!}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
                             role="menuitem">Last 7 days</a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{!! route('home', ['mainWidgetPeriods' => [\Carbon\Carbon::now()->subDays(14)->format('Y-m-d'), \Carbon\Carbon::now()->format('Y/m/d')]]) !!}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                            role="menuitem">Last 30 days</a>
+                            role="menuitem">Last 14 days</a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{!! route('home', ['mainWidgetPeriods' => [\Carbon\Carbon::now()->subDays(30)->format('Y-m-d'), \Carbon\Carbon::now()->format('Y/m/d')]]) !!}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
-                            role="menuitem">Last 90 days</a>
+                            role="menuitem">Last 30 days</a>
                     </li>
                 </ul>
                 <div class="py-1" role="none">

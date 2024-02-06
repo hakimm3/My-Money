@@ -56,8 +56,11 @@ class HomeController extends Controller
         
 
         // Main Widget 
-        $spendings = $baseQuerySpending->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date')->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
-        $incomes = $baseQueryIncome->clone()->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->orderBy('date')->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
+        // dd($request->mainWidgetPeriods);
+        $periods = $request->mainWidgetPeriods ?? [Carbon::now()->subDays(6)->format('Y-m-d'), Carbon::now()->format('Y-m-d')];
+
+        $spendings = $baseQuerySpending->clone()->whereBetween('date', $periods)->orderBy('date')->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
+        $incomes = $baseQueryIncome->clone()->whereBetween('date', $periods)->orderBy('date')->groupBy('date')->selectRaw('sum(amount) as amount, date')->get();
 
         $mainWidgetData = [];
         $mainWidgetData['spending'] = $spendings->pluck('amount')->toArray();
